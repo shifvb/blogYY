@@ -70,7 +70,7 @@
                     </div>
                     <!-- todo: article category -->
                     <div class="article_category"></div>
-                    <div class="article_content">{{ article["content"] }}</div>
+                    <div class="article_content">{{ article["content"] | safe }}</div>
                     <div class="article_footer">
                         {% if article['href_ful']  %}
                         <a href="{{ article['href_ful'] }}">查看全文>></a>

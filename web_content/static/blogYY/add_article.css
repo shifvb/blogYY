@@ -1,0 +1,8 @@
+body {
+    width: 960px;
+    margin: 0 auto;
+}
+
+#article_content_editor {
+    height: 600px;
+}

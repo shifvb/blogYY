@@ -1,10 +1,24 @@
 $(function(){
-    $addArticleForm = $("form");
-    $addArticleForm.submit(function(e) {
+    // 初始化文本编辑器
+    var quill = new Quill("#article_content_editor", {
+        modules: {
+            toolbar: "#article_content_toolbar"
+        },
+        theme: "snow"
+    });
+
+    // 提交用户输入的文章内容
+    document.querySelector("#submit_btn").onclick = function() {
+        var data = {
+            title: document.querySelector("#article_title").value,
+            create_time_str: document.querySelector("#article_create_time_str").value,
+            content: document.querySelector("#article_content_editor").children[0].innerHTML,
+            category_id: document.querySelector("#category_id").value,
+        };
         $.post({
             "url": "/blogYY/api/v1/add_article",
             "type": "POST",
-            "data": $addArticleForm.serializeArray(),
+            "data": data,
             "success": function(rsp) {
                 location.href = "/blogYY/article"
             },
@@ -12,6 +26,5 @@ $(function(){
                 alert("error");
             }
         });
-        e.preventDefault(); // 阻止表单自动提交
-    });
+    };
 });
