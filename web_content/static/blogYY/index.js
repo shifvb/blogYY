@@ -1,10 +1,4 @@
 $(function(){
-    // 将innerHTML按照markdown格式进行解释
-    var converter = new showdown.Converter();
-    document.querySelectorAll(".article > .article_content").forEach(function(x) {
-        x.innerHTML = converter.makeHtml(x.innerHTML)
-    });
-
     // 删除article按钮鼠标单击事件绑定
     $(".article .delete_article_btn").on("click", function() {
         if (!confirm("确定删除？")) {
