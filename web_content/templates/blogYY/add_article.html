@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="immigrant_article">
+    <form class="article_form">
+        <div>
+            <label for="title">标题：</label>
+            <input type="text" id="title" name="title">
+            <label for="create_time_str">时间：</label>
+            <input type="text" id="create_time_str" name="create_time_str">
+        </div>
+        <div>
+            <textarea id="content_left" name="content"></textarea>
+            <textarea id="content_right"></textarea>
+        </div>
+        <div>
+            <label for="category_id">分类</label>
+            <select name="category_id" id="category_id">
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+
+        </div>
+        <div><input type="submit" value="提交"></div>
+    </form>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='plugin/jQuery/jquery-3.4.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='blogYY/add_article.js') }}"></script>
+</body>
+</html>

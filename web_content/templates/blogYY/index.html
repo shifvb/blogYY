@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/index.css') }}">
+</head>
+<body>
+<div class="main">
+    <div class="nav_wrapper">
+        <div class="nav">
+            <ul class="nav_list_left">
+                <li class="nav_logo"><a href="">博客</a></li>
+                <li class="nav_search">
+                    <input type="text" id="nav_input">
+                    <div class="nav_search_btn"></div>
+                </li>
+            </ul>
+            <ul class="nav_list_right">
+                <li class="nav_to_index"><a href="">首页</a></li>
+                <li class="nav_login"><a href="">登录</a></li>
+                <li class="nav_register"><a href="">注册</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="header_wrapper">
+        <div class="header">
+            <div class="header_title_1">
+                <a href="">伟大的博弈-于跃的博客</a>
+            </div>
+            <div class="header_title_2">
+                <a href="">http://www.woshiduxingxiayu.info/</a>
+                <a href="">[订阅]</a>
+                <a href="">[手机订阅]</a>
+            </div>
+            <div class="header_title_3">
+                <a href="{{ url_for('blogYY_page_article') }}">首页</a>
+                <a href="">博文目录</a>
+                <a href="">关于我</a>
+            </div>
+            <div class="header_title_4">
+                <a href="{{ url_for('blogYY_page_add_article') }}">发博文</a>
+                <a href="">页面设置</a>
+                <a href="">个人中心</a>
+            </div>
+        </div>
+    </div>
+    <div class="blog_body_wrapper">
+        <div class="blog_body">
+            <div class="sidebar">
+                <div class="sidebar_module personal_info">
+                    <span class="sidebar_title">个人资料</span>
+                    <img class="avatar" src="{{ url_for('static', filename='blogYY/personal_info_img.jpg') }}" alt="">
+                    <span class="nickname">伟大的博弈-于跃</span>
+                </div>
+            </div>
+            <div class="article_wrapper">
+                <span class="article_wrapper_title">博文</span>
+                {% for article in articles %}
+                <div class="article">
+                    <div class="article_header">
+                        <a href="{{ article['href_ful'] }}" class="article_title">{{ article["title"] }}</a>
+                        <span class="article_create_time">({{ article["create_time_str"] }})</span>
+                        {% if article['href_mod'] %}
+                        <a href="{{ article['href_mod'] }}" class="modify_article_btn">[编辑]</a>
+                        {% endif %}
+                        {% if article['href_del'] %}
+                        <a href="{{ article['href_del'] }}" class="delete_article_btn">[删除]</a>
+                        {% endif %}
+                    </div>
+                    <!-- todo: article category -->
+                    <div class="article_category"></div>
+                    <div class="article_content">{{ article["content"] }}</div>
+                    <div class="article_footer">
+                        {% if article['href_ful']  %}
+                        <a href="{{ article['href_ful'] }}">查看全文>></a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="footer_wrapper">
+        <div class="footer">
+            <span>Copyright © 2020 shifvb, All Rights Reserved</span>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='plugin/jQuery/jquery-3.4.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugin/showdown/showdown-1.9.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='blogYY/index.js') }}"></script>
+</body>
+</html>
