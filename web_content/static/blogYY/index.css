@@ -311,8 +311,6 @@ body {
 
 .article > .article_content {
     margin-top: 40px;
-    max-height: 500px;
-    overflow: hidden;
 }
 
 .article > .article_content > p {

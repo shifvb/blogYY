@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/index.css') }}">
+    <!-- restrict article max height in article list mode -->
+    {% if not single_article_mode %}
+    <style>
+        .article > .article_content {
+            max-height: 500px;
+            overflow: hidden;
+        }
+    </style>
+{% endif %}
 </head>
 <body>
 <div class="main">
