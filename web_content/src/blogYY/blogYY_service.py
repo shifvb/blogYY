@@ -25,7 +25,7 @@ def search_articles(limit: int, offset: int):
         "id": _[0],
         "title": _[1],
         "create_time_str": datetime.fromtimestamp(_[2]).strftime("%Y-%m-%d %H:%M:%S"),
-        "content": _[3][:499] + "..." if len(_[3]) > 512 else _[3],
+        "content": _[3],
         "category": _[4],
         "href_ful": url_for("blogYY_page_single_article", article_id=_[0])
     } for _ in _cursor.fetchall()]

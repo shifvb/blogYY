@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from flask import render_template
 from flask import request
@@ -16,8 +17,14 @@ def blogYY_page_article():
     page_size = request.args["page_size"] if hasattr(request.args, "page_size") else 20
     page_num = request.args["page_num"] if hasattr(request.args, "page_num") else 1
     offset = (page_num - 1) * page_size
+    # restrict the number of content nodes
+    articles = search_articles(limit=page_size, offset=offset)
+    for article in articles:
+        _json_obj = json.loads(article["content"])
+        _json_obj["ops"] = _json_obj["ops"][:10]
+        article["content"] = json.dumps(_json_obj)
     # render page
-    return render_template("blogYY/index.html", articles=search_articles(limit=page_size, offset=offset))
+    return render_template("blogYY/index.html", articles=articles)
 
 
 @app.route("/blogYY/article/<int:article_id>", methods=["GET"])

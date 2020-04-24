@@ -12,7 +12,7 @@ $(function(){
         var data = {
             title: document.querySelector("#article_title").value,
             create_time_str: document.querySelector("#article_create_time_str").value,
-            content: document.querySelector("#article_content_editor").children[0].innerHTML,
+            content: JSON.stringify(quill.getContents()),
             category_id: document.querySelector("#category_id").value,
         };
         $.post({

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/index.css') }}">
 </head>
 <body>
@@ -70,7 +71,7 @@
                     </div>
                     <!-- todo: article category -->
                     <div class="article_category"></div>
-                    <div class="article_content">{{ article["content"] | safe }}</div>
+                    <div class="article_content" data-raw="{{ article['content'] }}"></div>
                     <div class="article_footer">
                         {% if article['href_ful']  %}
                         <a href="{{ article['href_ful'] }}">查看全文>></a>
@@ -88,6 +89,7 @@
     </div>
 </div>
 <script src="{{ url_for('static', filename='plugin/jQuery/jquery-3.4.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugin/quill/quill.min.js') }}"></script>
 <script src="{{ url_for('static', filename='blogYY/index.js') }}"></script>
 </body>
 </html>
