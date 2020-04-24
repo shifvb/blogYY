@@ -6,7 +6,11 @@ $(function(){
         },
         theme: "snow"
     });
-    quill.setContents(JSON.parse(document.querySelector("#article_content_editor").dataset.raw));
+    var _content = document.querySelector("#article_content_editor").dataset.raw
+    if (_content) {
+        quill.setContents(JSON.parse(_content));
+    }
+
 
     // 提交用户输入的文章内容
     document.querySelector("#submit_btn").onclick = function() {
@@ -21,7 +25,7 @@ $(function(){
             "type": "POST",
             "data": data,
             "success": function(rsp) {
-                location.href = "/blogYY/article"
+                location.href = document.querySelector("#submit_btn").dataset.redirectUrl;
             },
             "error": function(rsp) {
                 alert("error");

@@ -50,6 +50,7 @@ def blogYY_page_add_article():
         content="",
         category_id=1,
         submit_url=url_for('blogYY_api_add_article_v1'),
+        redirect_url=url_for('blogYY_page_article'),
         categories=search_categories()
     )
 
@@ -68,6 +69,7 @@ def blogYY_page_mod_article(article_id):
         content=article["content"],
         category_id=article["category_id"],
         submit_url=url_for('blogYY_api_mod_article_v1', article_id=article["id"]),
+        redirect_url=url_for('blogYY_page_single_article', article_id=article["id"]),
         categories=search_categories()
     )
 
