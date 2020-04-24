@@ -3,11 +3,13 @@ from datetime import datetime
 from flask import render_template
 from flask import request
 from flask import jsonify
+from flask import url_for
 from web_content import app
 from web_content.src.blogYY.blogYY_service import search_articles
 from web_content.src.blogYY.blogYY_service import add_article
 from web_content.src.blogYY.blogYY_service import search_article_by_id
 from web_content.src.blogYY.blogYY_service import search_categories
+from web_content.src.blogYY.blogYY_service import update_article_by_id
 from web_content.src.blogYY.blogYY_service import delete_article_by_id
 
 
@@ -38,7 +40,36 @@ def blogYY_page_single_article(article_id):
 
 @app.route("/blogYY/add_article", methods=["GET"])
 def blogYY_page_add_article():
-    return render_template("blogYY/add_article.html", categories=search_categories())
+    """
+    rendering add article page
+    :return: rendered added article page
+    """
+    return render_template(
+        template_name_or_list="blogYY/add_article.html",
+        title="",
+        content="",
+        category_id=1,
+        submit_url=url_for('blogYY_api_add_article_v1'),
+        categories=search_categories()
+    )
+
+
+@app.route("/blogYY/mod_article/<int:article_id>", methods=["GET"])
+def blogYY_page_mod_article(article_id):
+    """
+    rendering modify article page
+    :param article_id: int, article id
+    :return: rendered article page
+    """
+    article = search_article_by_id(article_id)[0]
+    return render_template(
+        template_name_or_list="blogYY/add_article.html",
+        title=article["title"],
+        content=article["content"],
+        category_id=article["category_id"],
+        submit_url=url_for('blogYY_api_mod_article_v1', article_id=article["id"]),
+        categories=search_categories()
+    )
 
 
 @app.route("/blogYY/api/v1/add_article", methods=["POST"])
@@ -49,12 +80,12 @@ def blogYY_api_add_article_v1():
         POST /blogYY/api/v1/add_article
     parameter:
         title: article title, str
-        author: article author, str
         create_time_str: article create time, YYYY-mm-dd
         content: article content, str
+        category_id: article category id, int
     response:
         {
-            "status": "success"
+            "result": "success"
         }
     """
     # timestamp processing
@@ -69,20 +100,50 @@ def blogYY_api_add_article_v1():
         request.form["category_id"]
     )
     return jsonify({
-        "status": "success"
+        "result": "success"
     })
 
 
 @app.route("/blogYY/api/v1/del_article/<int:article_id>", methods=["POST"])
 def blogYY_api_delete_article_v1(article_id):
+    """
+    api for delete article
+    url:
+        POST /blogYY/api/v1/del_article/<int:article_id>
+    parameter:
+        no HTML form-data parameter
+    response:
+        {
+            "result": "success"
+        }
+    """
     delete_article_by_id(article_id)
     return jsonify({
-        "msg": "success"
+        "result": "success"
     })
 
 
 @app.route("/blogYY/api/v1/mod_article/<int:article_id>", methods=["POST"])
-def blogYY_api_modify_article_v1(article_id):
+def blogYY_api_mod_article_v1(article_id):
+    """
+    api for modify article
+    url:
+        POST /blogYY/api/v1/mod_article/<int:article_id>
+    parameter:
+        title: article title, str
+        content: article content, str
+        category_id: article category id, int
+    response:
+        {
+            "result": "success"
+        }
+    """
+    update_article_by_id(
+        article_id=article_id,
+        title=request.form["title"],
+        content=request.form["content"],
+        category_id=request.form["category_id"]
+    )
     return jsonify({
-        "msg": "开发中，敬请期待！"
+        "result": "success"
     })

@@ -9,13 +9,12 @@
 <body>
 <div>
     <label for="article_title">标题：</label>
-    <input type="text" id="article_title">
+    <input type="text" id="article_title" value="{{ title }}" placeholder="标题">
 </div>
 <div>
     <label for="article_create_time_str">时间：</label>
     <input type="text" id="article_create_time_str">
 </div>
-
 <div id="article_content_toolbar">
     <span class="ql-formats">
         <select class="ql-font">
@@ -63,17 +62,21 @@
         <button class="ql-clean"></button>
     </span>
 </div>
-<div id="article_content_editor"></div>
+<div id="article_content_editor" data-raw="{{ content }}"></div>
 <div>
     <label for="category_id">分类</label>
     <select id="category_id">
-        {% for category in categories %}
+    {% for category in categories %}
+        {% if category.id == category_id %}
+        <option value="{{ category.id }}" selected="selected">{{ category.name }}</option>
+        {% else %}
         <option value="{{ category.id }}">{{ category.name }}</option>
-        {% endfor %}
+        {% endif %}
+    {% endfor %}
     </select>
 </div>
 <div>
-    <button id="submit_btn">提交</button>
+    <button id="submit_btn" data-submit-url="{{ submit_url }}">提交</button>
 </div>
 
 

@@ -54,8 +54,8 @@ def search_article_by_id(article_id: int):
         "title": _[1],
         "create_time_str": datetime.fromtimestamp(_[2]).strftime("%Y-%m-%d %H:%M:%S"),
         "content": _[3],
-        "category": _[4],
-        "href_mod": url_for("blogYY_api_modify_article_v1", article_id=_[0]),
+        "category_id": _[4],
+        "href_mod": url_for("blogYY_page_mod_article", article_id=_[0]),
         "href_del": url_for("blogYY_api_delete_article_v1", article_id=_[0])
     } for _ in [_cursor.fetchone()]]
 
@@ -111,4 +111,27 @@ def delete_article_by_id(article_id: int):
             `id` = ?
         ;
     """, (article_id,))
+    g.blogYY_conn.commit()
+
+
+def update_article_by_id(article_id: int, title: str, content: str, category_id: int):
+    """
+    update article data by its id
+    :param article_id: article id
+    :param title: article title
+    :param content: article content
+    :param category_id: category id
+    """
+    _cursor = g.blogYY_conn.cursor()
+    _cursor.execute("""
+    UPDATE
+        `article`
+    SET
+        `title` = ?,
+        `content` = ?,
+        `category_id` = ?
+    WHERE
+        `id` = ?
+    ;
+    """, (title, content, category_id, article_id))
     g.blogYY_conn.commit()

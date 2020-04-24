@@ -6,6 +6,7 @@ $(function(){
         },
         theme: "snow"
     });
+    quill.setContents(JSON.parse(document.querySelector("#article_content_editor").dataset.raw));
 
     // 提交用户输入的文章内容
     document.querySelector("#submit_btn").onclick = function() {
@@ -16,7 +17,7 @@ $(function(){
             category_id: document.querySelector("#category_id").value,
         };
         $.post({
-            "url": "/blogYY/api/v1/add_article",
+            "url": document.querySelector("#submit_btn").dataset.submitUrl,
             "type": "POST",
             "data": data,
             "success": function(rsp) {
