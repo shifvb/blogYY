@@ -37,8 +37,6 @@ body {
     min-width: 950px;
     height: 32px;
     border: 1px solid #c3c3c3;
-    position: fixed;
-    top: 0;
     background-image: linear-gradient(#fff, #e1e1e1);
     display: flex;
     justify-content: center;
