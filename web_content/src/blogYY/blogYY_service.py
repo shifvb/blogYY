@@ -1,6 +1,5 @@
 from datetime import datetime
 from flask import g
-from flask import url_for
 
 
 def search_articles(limit: int, offset: int):
@@ -26,8 +25,7 @@ def search_articles(limit: int, offset: int):
         "title": _[1],
         "create_time_str": datetime.fromtimestamp(_[2]).strftime("%Y-%m-%d %H:%M:%S"),
         "content": _[3],
-        "category": _[4],
-        "href_ful": url_for("blogYY_page_single_article", article_id=_[0])
+        "category": _[4]
     } for _ in _cursor.fetchall()]
 
 
@@ -54,9 +52,7 @@ def search_article_by_id(article_id: int):
         "title": _[1],
         "create_time_str": datetime.fromtimestamp(_[2]).strftime("%Y-%m-%d %H:%M:%S"),
         "content": _[3],
-        "category_id": _[4],
-        "href_mod": url_for("blogYY_page_mod_article", article_id=_[0]),
-        "href_del": url_for("blogYY_api_delete_article_v1", article_id=_[0])
+        "category_id": _[4]
     } for _ in [_cursor.fetchone()]]
 
 

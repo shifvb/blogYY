@@ -19,12 +19,17 @@ def blogYY_page_article():
     page_size = request.args["page_size"] if hasattr(request.args, "page_size") else 20
     page_num = request.args["page_num"] if hasattr(request.args, "page_num") else 1
     offset = (page_num - 1) * page_size
-    # restrict the number of content nodes
+
+    # data processing
     articles = search_articles(limit=page_size, offset=offset)
     for article in articles:
+        # added href_ful attribute
+        article["href_ful"] = url_for("blogYY_page_single_article", article_id=article["id"])
+        # restrict the number of content nodes
         _json_obj = json.loads(article["content"])
         _json_obj["ops"] = _json_obj["ops"][:10]
         article["content"] = json.dumps(_json_obj)
+
     # render page
     return render_template("blogYY/index.html", articles=articles)
 
@@ -35,7 +40,13 @@ def blogYY_page_single_article(article_id):
     page for showing single article
     :param article_id: article id
     """
-    return render_template("blogYY/index.html", articles=search_article_by_id(article_id))
+    # data processing
+    article = search_article_by_id(article_id)[0]
+    article["href_mod"] = url_for("blogYY_page_mod_article", article_id=article["id"])
+    article["href_del"] = url_for("blogYY_api_del_article_v1", article_id=article["id"])
+
+    # render template
+    return render_template("blogYY/index.html", articles=[article])
 
 
 @app.route("/blogYY/add_article", methods=["GET"])
@@ -107,7 +118,7 @@ def blogYY_api_add_article_v1():
 
 
 @app.route("/blogYY/api/v1/del_article/<int:article_id>", methods=["POST"])
-def blogYY_api_delete_article_v1(article_id):
+def blogYY_api_del_article_v1(article_id):
     """
     api for delete article
     url:
