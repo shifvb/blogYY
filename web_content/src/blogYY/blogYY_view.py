@@ -16,8 +16,8 @@ from web_content.src.blogYY.blogYY_service import delete_article_by_id
 @app.route("/blogYY/article/", methods=["GET"])
 def blogYY_page_article():
     # page limit & offset
-    page_size = request.args["page_size"] if hasattr(request.args, "page_size") else 20
-    page_num = request.args["page_num"] if hasattr(request.args, "page_num") else 1
+    page_size = int(request.args["page_size"]) if "page_size" in request.args else 5
+    page_num = int(request.args["page_num"]) if "page_num" in request.args else 1
     offset = (page_num - 1) * page_size
 
     # data processing
