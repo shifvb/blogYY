@@ -20,7 +20,7 @@ def blogYY_page_article():
     page_num = int(request.args["page_num"]) if "page_num" in request.args else 1
     offset = (page_num - 1) * page_size
 
-    # data processing
+    # data processing -> articles
     articles = search_articles(limit=page_size, offset=offset)
     for article in articles:
         # added href_ful attribute
@@ -29,9 +29,17 @@ def blogYY_page_article():
         _json_obj = json.loads(article["content"])
         _json_obj["ops"] = _json_obj["ops"][:10]
         article["content"] = json.dumps(_json_obj)
-
+    # data processing -> page_links
+    _start = max(1, page_num - 5)
+    _end = _start + 10
+    page_links = list()
+    for _idx in range(_start, _end):
+        page_links.append({
+            "text": _idx,
+            "href": url_for("blogYY_page_article", page_num=_idx)
+        })
     # render page
-    return render_template("blogYY/index.html", articles=articles)
+    return render_template("blogYY/index.html", articles=articles, page_links=page_links)
 
 
 @app.route("/blogYY/article/<int:article_id>", methods=["GET"])
