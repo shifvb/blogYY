@@ -9,6 +9,10 @@ p, span, a {
     font-family: "宋体";
 }
 
+img {
+    width: 100%;
+}
+
 body {
     min-width: 1024px;
 }
