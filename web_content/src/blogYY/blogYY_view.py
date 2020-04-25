@@ -45,7 +45,7 @@ def blogYY_page_article():
 
     # render page
     return render_template(
-        "blogYY/index.html",
+        "blogYY/index/index.html",
         articles=articles,
         page_link=page_link,
         current_page=page_num,
@@ -65,7 +65,7 @@ def blogYY_page_single_article(article_id):
     article["href_del"] = url_for("blogYY_api_del_article_v1", article_id=article["id"])
 
     # render template
-    return render_template("blogYY/single_article.html", article=article)
+    return render_template("blogYY/single_article/single_article.html", article=article)
 
 
 @app.route("/blogYY/add_article", methods=["GET"])
