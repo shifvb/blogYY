@@ -209,9 +209,9 @@ body {
     text-align: center;
     border-radius: 3px;
 }
-
 /* ----------- header end ----------- */
 
+/* ----------- blog body start ----------- */
 .blog_body_wrapper {
     width: 100%;
 }
@@ -221,9 +221,9 @@ body {
     margin: 30px auto 0 auto;
     display: flex;
 }
+/* ----------- blog body end ----------- */
 
 /* ----------- sidebar start ----------- */
-
 .sidebar {
     width: 210px;
 }
@@ -256,11 +256,9 @@ body {
     margin-top: 7px;
     font-weight: 700;
 }
-
 /* ----------- sidebar end ----------- */
 
 /* ----------- article start ----------- */
-
 .article_wrapper {
     width: 728px;
     border: 1px solid rgba(121, 103, 0, 0.141);
@@ -354,11 +352,9 @@ body {
 .article > .article_footer > a:hover {
     text-decoration: underline;
 }
-
 /* ----------- article end ----------- */
 
 /* ----------- footer start ----------- */
-
 .footer_wrapper {
     height: 50px;
     margin-top: 100px;
@@ -370,7 +366,4 @@ body {
     text-align: center;
     color: #646c5a
 }
-
 /* ----------- footer end ----------- */
-
-
