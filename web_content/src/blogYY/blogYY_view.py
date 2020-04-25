@@ -32,6 +32,8 @@ def blogYY_page_blog_index():
     for article in articles:
         # added href_ful attribute
         article["href_ful"] = url_for("blogYY_page_single_article", article_id=article["id"])
+        # add category_href attribute
+        article["category_href"] = url_for("blogYY_page_article_list", category_id=article["category_id"])
         # restrict the number of content nodes
         _json_obj = json.loads(article["content"])
         _json_obj["ops"] = _json_obj["ops"][:10]
@@ -64,6 +66,7 @@ def blogYY_page_single_article(article_id):
     article = search_article_by_id(article_id)[0]
     article["href_mod"] = url_for("blogYY_page_mod_article", article_id=article["id"])
     article["href_del"] = url_for("blogYY_api_del_article_v1", article_id=article["id"])
+    article["category_href"] = url_for("blogYY_page_article_list", category_id=article["category_id"])
 
     # render template
     return render_template("blogYY/pg_single_article/sa.html", article=article)

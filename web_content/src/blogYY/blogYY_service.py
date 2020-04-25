@@ -13,6 +13,7 @@ def search_articles(limit: int, offset: int):
         `article`.`title`,
         `article`.`create_timestamp`,
         `article`.`content`,
+        `category`.`id`,
         `category`.`name`
     FROM 
         `article` 
@@ -29,7 +30,8 @@ def search_articles(limit: int, offset: int):
         "title": _[1],
         "create_time_str": datetime.fromtimestamp(_[2]).strftime("%Y-%m-%d %H:%M:%S"),
         "content": _[3],
-        "category_name": _[4],
+        "category_id": _[4],
+        "category_name": _[5],
     } for _ in _cursor.fetchall()]
 
 

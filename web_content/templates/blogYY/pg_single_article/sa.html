@@ -21,8 +21,7 @@
         </div>
         <div class="article_category">
             <span>分类：</span>
-            <!-- todo: category_name_href -->
-            <a href="">{{ article["category_name"] }}</a>
+            <a href="{{ article['category_href'] }}">{{ article["category_name"] }}</a>
         </div>
         <div class="article_content" data-raw="{{ article['content'] }}"></div>
         <div class="article_footer">
