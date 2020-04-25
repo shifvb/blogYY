@@ -9,13 +9,17 @@ def search_articles(limit: int, offset: int):
     _cursor = g.blogYY_conn.cursor()
     _cursor.execute("""
     SELECT
-        `id`,  
-        `title`,
-        `create_timestamp`,
-        `content`,
-        `category_id`
+        `article`.`id`,  
+        `article`.`title`,
+        `article`.`create_timestamp`,
+        `article`.`content`,
+        `category`.`name`
     FROM 
         `article` 
+    INNER JOIN
+        `category`
+    ON
+        `article`.`category_id` = `category`.`id`
     ORDER BY 
         `create_timestamp` DESC 
     LIMIT ? 
@@ -25,7 +29,7 @@ def search_articles(limit: int, offset: int):
         "title": _[1],
         "create_time_str": datetime.fromtimestamp(_[2]).strftime("%Y-%m-%d %H:%M:%S"),
         "content": _[3],
-        "category": _[4]
+        "category_name": _[4],
     } for _ in _cursor.fetchall()]
 
 
@@ -156,5 +160,22 @@ def count_articles(category_id=None):
             WHERE
                 `category_id`=?
             ;
+        """, (category_id,))
+    return _cursor.fetchone()[0]
+
+
+def search_category_name_by_id(category_id):
+    """
+    search category name name by id
+    """
+    _cursor = g.blogYY_conn.cursor()
+    _cursor.execute("""
+        SELECT
+            `name`
+        FROM
+            `category`
+        WHERE
+            `id`=?
+        ;
         """, (category_id,))
     return _cursor.fetchone()[0]

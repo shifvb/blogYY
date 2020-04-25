@@ -78,8 +78,11 @@
                         <a href="{{ article['href_del'] }}" class="delete_article_btn">[删除]</a>
                         {% endif %}
                     </div>
-                    <!-- todo: article category -->
-                    <div class="article_category"></div>
+                    <div class="article_category">
+                        <span>分类：</span>
+                        <!-- todo: category_name_href -->
+                        <a href="">{{ article["category_name"] }}</a>
+                    </div>
                     <div class="article_content" data-raw="{{ article['content'] }}"></div>
                     <div class="article_footer">
                         {% if article['href_ful']  %}

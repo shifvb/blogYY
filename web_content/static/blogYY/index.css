@@ -310,8 +310,22 @@ body {
     margin-bottom: 2px;
 }
 
+.article > .article_category {
+    margin-top: 10px;
+}
+
+.article > .article_category > span {
+    font-size: 12px;
+    color: #637160;
+}
+
+.article > .article_category > a {
+    color: #279eb0;
+    font-size: 13px;
+}
+
 .article > .article_content {
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
 .article > .article_content > p {

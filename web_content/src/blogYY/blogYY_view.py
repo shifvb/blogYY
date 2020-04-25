@@ -36,7 +36,7 @@ def blogYY_page_article():
         _json_obj["ops"] = _json_obj["ops"][:10]
         article["content"] = json.dumps(_json_obj)
 
-    # page_control
+    # data processing -> page_control
     article_count = count_articles()
     total_page = article_count // page_size
     if total_page % page_size > 0:
