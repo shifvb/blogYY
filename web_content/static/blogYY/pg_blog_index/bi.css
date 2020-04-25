@@ -1,0 +1,143 @@
+/* bug fix: change padding & margin of DOM element ql-editor in Quill */
+.ql-editor {
+    padding: 0;
+}
+
+/* restrict article max height to 500px */
+.article > .article_content {
+    max-height: 500px;
+    overflow: hidden;
+}
+
+/* ----------- article start ----------- */
+.article_wrapper {
+    width: 728px;
+    border: 1px solid rgba(121, 103, 0, 0.141);
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-left: 10px;
+}
+
+.article_wrapper > .article_wrapper_title {
+    padding-left: 9px;
+    padding-top: 7px;
+    font-weight: 700;
+    font-size: 12px;
+    color: #7c6833;
+    padding-bottom: 4px;
+    display: block;
+}
+
+.article {
+    padding: 0 19px;
+}
+
+.article > .article_header {
+    width: 690px;
+    display: flex;
+    align-items: flex-end;
+    padding-top: 26px;
+}
+
+.article > .article_header > .article_title {
+    color: #279eb0;
+    font-size: 18px;
+    font-family: "微软雅黑", "黑体";
+    font-weight: 300;
+}
+
+.article > .article_header > .article_create_time {
+    color: #631760;
+    font-size: 12px;
+    margin-left: 5px;
+    margin-bottom: 2px;
+}
+
+.article > .article_header > .modify_article_btn, .delete_article_btn {
+    font-size: 12px;
+    color: #279eb0;
+    margin-left: 5px;
+    margin-bottom: 2px;
+}
+
+.article > .article_category {
+    margin-top: 10px;
+}
+
+.article > .article_category > span {
+    font-size: 12px;
+    color: #637160;
+}
+
+.article > .article_category > a {
+    color: #279eb0;
+    font-size: 13px;
+}
+
+.article > .article_content {
+    margin-top: 10px;
+}
+
+.article > .article_content > p {
+    line-height: 21px;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin-bottom: 15px;
+    font-family: "Microsoft YaHei", "Helvetica Neue", SimSun;
+}
+
+.article > .article_footer {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px dashed rgba(39, 158, 176, 0.2);
+    padding-bottom: 15px;
+    margin-top: 15px;
+}
+
+.article > .article_footer > a {
+    text-decoration: none;
+    font-family: "宋体";
+    font-size: 12px;
+    color: #279eb0;
+}
+
+.article > .article_footer > a:hover {
+    text-decoration: underline;
+}
+/* ----------- article end ----------- */
+
+/* ----------- page_control start ----------- */
+
+.page_control {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.page_buttons {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page_control > div > a {
+    text-decoration: none;
+    background-color: rgb(0, 0, 0, 0.1);
+    color: #595959;
+    border-radius: 3px;
+    font-size: 14px;
+    font-family: Verdana;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 15px;
+    user-select: none;
+}
+
+.page_control > div > .page_link_disabled {
+    color: #a9a9a9;
+}
+
+.page_control > div > .page_link_highlighted {
+    color: red;
+}
+
+/* ----------- page_control end ----------- */

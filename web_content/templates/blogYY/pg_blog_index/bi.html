@@ -2,16 +2,15 @@
 
 {% block css_block %}
 <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/module/article_module.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/sb_person_info/pi.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/index/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/pg_blog_index/bi.css') }}">
 {% endblock %}
 
-{% block person_info_module %}
+{% block sidebar_modules %}
 {% include "blogYY/sb_person_info/pi.html" %}
 {% endblock %}
 
-{% block article_module %}
+{% block body_modules %}
 <div class="article_wrapper">
     <span class="article_wrapper_title">博文</span>
     {% for article in articles %}
@@ -54,5 +53,5 @@
 {% block js_block %}
 {{ super() }}
 <script src="{{ url_for('static', filename='plugin/quill/quill.min.js') }}"></script>
-<script src="{{ url_for('static', filename='blogYY/index/index.js') }}"></script>
+<script src="{{ url_for('static', filename='blogYY/pg_blog_index/bi.js') }}"></script>
 {% endblock %}
