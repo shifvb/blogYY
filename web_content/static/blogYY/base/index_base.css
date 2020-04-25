@@ -20,7 +20,7 @@ body {
 
 .main {
     background-color: #bfcdac;
-    background-image: url("/static/blogYY/blogYY.jpg");
+    background-image: url("/static/blogYY/base/blogYY.jpg");
     background-repeat: no-repeat;
     background-position: center 30px;
     width: 100%;
