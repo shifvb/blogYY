@@ -3,14 +3,14 @@
 {% block css_block %}
 <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/module/article_module.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/module/person_info_module.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/sb_mod/person_info/pi.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/single_article/single_article.css') }}">
 {% endblock %}
 
 {% block person_info_module %}
 <div class="sidebar_module personal_info">
     <span class="sidebar_title">个人资料</span>
-    <img class="avatar" src="{{ url_for('static', filename='blogYY/personal_info_img.jpg') }}" alt="">
+    <img class="avatar" src="{{ url_for('static', filename='blogYY/sb_mod/person_info/pi.jpg') }}" alt="">
     <span class="nickname">伟大的博弈-于跃</span>
 </div>
 {% endblock %}
