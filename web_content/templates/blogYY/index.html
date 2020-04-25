@@ -5,8 +5,8 @@
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/index.css') }}">
-    <!-- restrict article max height in article list mode -->
-    {% if not single_article_mode %}
+    <!-- restrict article max height to 500px in index mode -->
+    {% if content_mode == 'index' %}
     <style>
         .article > .article_content {
             max-height: 500px;
@@ -91,8 +91,8 @@
                     </div>
                 </div>
                 {% endfor %}
-                <!-- enable page control in article list mode -->
-                {% if not single_article_mode %}
+                <!-- enable page control in index mode -->
+                {% if content_mode == 'index' %}
                 <div class="page_control" data-page-link="{{ page_link }}" data-current-page="{{ current_page }}" data-total-page="{{ total_page }}">
                     <div class="prev_page">
                         <a class="page_link_disabled">&lt;上一页</a>
