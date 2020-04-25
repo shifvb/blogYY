@@ -69,7 +69,7 @@
                 {% for article in articles %}
                 <div class="article">
                     <div class="article_header">
-                        <a href="{{ article['href_ful'] }}" class="article_title">{{ article["title"] }}</a>
+                        <a href="{{ article['href_ful'] }}" target="_blank" class="article_title">{{ article["title"] }}</a>
                         <span class="article_create_time">({{ article["create_time_str"] }})</span>
                         {% if article['href_mod'] %}
                         <a href="{{ article['href_mod'] }}" class="modify_article_btn">[编辑]</a>
