@@ -168,3 +168,29 @@ def count_articles(category_id=None):
             ;
         """, (category_id,))
     return _cursor.fetchone()[0]
+
+
+def search_articles_group_by_category():
+    """
+    search the count of each category
+    :return:
+    """
+    _cursor = g.blogYY_conn.cursor()
+    _cursor.execute("""
+        SELECT
+            `category`.`id`,
+            `category`.`name`,
+            COUNT(`article`.`id`)
+        FROM
+            `article` INNER JOIN `category`
+        ON
+            `article`.`category_id` = `category`.`id`
+        GROUP BY
+            `category`.`id`
+        ;
+        """)
+    return [{
+        "category_id": _[0],
+        "category_name": _[1],
+        "article_count": _[2]
+    } for _ in _cursor.fetchall()]
