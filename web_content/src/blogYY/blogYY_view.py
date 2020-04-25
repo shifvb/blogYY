@@ -103,7 +103,7 @@ def blogYY_page_mod_article(article_id):
     """
     article = search_article_by_id(article_id)[0]
     return render_template(
-        template_name_or_list="blogYY/add_article.html",
+        template_name_or_list="blogYY/pg_add_article/aa.html",
         title=article["title"],
         content=article["content"],
         category_id=article["category_id"],
@@ -160,7 +160,8 @@ def blogYY_api_del_article_v1(article_id):
     """
     delete_article_by_id(article_id)
     return jsonify({
-        "result": "success"
+        "result": "success",
+        "href": url_for("blogYY_page_blog_index")
     })
 
 

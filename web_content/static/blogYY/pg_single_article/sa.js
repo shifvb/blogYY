@@ -15,7 +15,7 @@ $(function() {
             "type": "POST",
             "success": function(rsp) {
                 alert("删除成功！");
-                location.href = "/blogYY/article/"
+                location.href = rsp["href"];
             },
             "error": function(rsp) {
                 alert("请求错误，请稍后再试！");
