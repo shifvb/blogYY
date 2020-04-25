@@ -1,125 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/index.css') }}">
-    <!-- restrict article max height to 500px in index mode -->
-    {% if content_mode == 'index' %}
-    <style>
-        .article > .article_content {
-            max-height: 500px;
-            overflow: hidden;
-        }
-    </style>
-    {% endif %}
-</head>
-<body>
-<div class="main">
-    <div class="nav_wrapper">
-        <div class="nav">
-            <ul class="nav_list_left">
-                <li class="nav_logo"><a href="">博客</a></li>
-                <li class="nav_search">
-                    <input type="text" id="nav_input">
-                    <div class="nav_search_btn"></div>
-                </li>
-            </ul>
-            <ul class="nav_list_right">
-                <li class="nav_to_index"><a href="">首页</a></li>
-                <li class="nav_login"><a href="">登录</a></li>
-                <li class="nav_register"><a href="">注册</a></li>
-            </ul>
-        </div>
+{% extends "blogYY/base/base_index.html" %}
+
+{% block head %}
+{{ super() }}
+<!-- restrict article max height to 500px -->
+<style>
+    .article > .article_content {
+        max-height: 500px;
+        overflow: hidden;
+    }
+</style>
+{% endblock %}
+
+{% block article %}
+<span class="article_wrapper_title">博文</span>
+{% for article in articles %}
+<div class="article">
+    <div class="article_header">
+        <a href="{{ article['href_ful'] }}" target="_blank" class="article_title">{{ article["title"]
+            }}</a>
+        <span class="article_create_time">({{ article["create_time_str"] }})</span>
     </div>
-    <div class="header_wrapper">
-        <div class="header">
-            <div class="header_title_1">
-                <a href="">伟大的博弈-于跃的博客</a>
-            </div>
-            <div class="header_title_2">
-                <a href="">http://www.woshiduxingxiayu.info/</a>
-                <a href="">[订阅]</a>
-                <a href="">[手机订阅]</a>
-            </div>
-            <div class="header_title_3">
-                <a href="{{ url_for('blogYY_page_article') }}">首页</a>
-                <a href="">博文目录</a>
-                <a href="">关于我</a>
-            </div>
-            <div class="header_title_4">
-                <a href="{{ url_for('blogYY_page_add_article') }}">发博文</a>
-                <a href="">页面设置</a>
-                <a href="">个人中心</a>
-            </div>
-        </div>
+    <div class="article_category">
+        <span>分类：</span>
+        <!-- todo: category_name_href -->
+        <a href="">{{ article["category_name"] }}</a>
     </div>
-    <div class="blog_body_wrapper">
-        <div class="blog_body">
-            <div class="sidebar">
-                <div class="sidebar_module personal_info">
-                    <span class="sidebar_title">个人资料</span>
-                    <img class="avatar" src="{{ url_for('static', filename='blogYY/personal_info_img.jpg') }}" alt="">
-                    <span class="nickname">伟大的博弈-于跃</span>
-                </div>
-            </div>
-            <div class="article_wrapper">
-                <span class="article_wrapper_title">博文</span>
-                {% for article in articles %}
-                <div class="article">
-                    <div class="article_header">
-                        <a href="{{ article['href_ful'] }}" target="_blank" class="article_title">{{ article["title"] }}</a>
-                        <span class="article_create_time">({{ article["create_time_str"] }})</span>
-                        {% if article['href_mod'] %}
-                        <a href="{{ article['href_mod'] }}" class="modify_article_btn">[编辑]</a>
-                        {% endif %}
-                        {% if article['href_del'] %}
-                        <a href="{{ article['href_del'] }}" class="delete_article_btn">[删除]</a>
-                        {% endif %}
-                    </div>
-                    <div class="article_category">
-                        <span>分类：</span>
-                        <!-- todo: category_name_href -->
-                        <a href="">{{ article["category_name"] }}</a>
-                    </div>
-                    <div class="article_content" data-raw="{{ article['content'] }}"></div>
-                    <div class="article_footer">
-                        {% if article['href_ful']  %}
-                        <a href="{{ article['href_ful'] }}">查看全文>></a>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-                <!-- enable page control in index mode -->
-                {% if content_mode == 'index' %}
-                <div class="page_control" data-page-link="{{ page_link }}" data-current-page="{{ current_page }}" data-total-page="{{ total_page }}">
-                    <div class="prev_page">
-                        <a class="page_link_disabled">&lt;上一页</a>
-                    </div>
-                    <div class="page_buttons">
-                        <a>1</a>
-                        <a class="page_link_disabled">2</a>
-                        <a class="page_link_disabled">3</a>
-                        <a class="page_link_disabled">4</a>
-                        <a class="page_link_disabled">5</a>
-                    </div>
-                    <div class="next_page">
-                        <a class="page_link_disabled">下一页&gt;</a>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <div class="footer_wrapper">
-        <div class="footer">
-            <span>Copyright © 2020 shifvb, All Rights Reserved</span>
-        </div>
+    <div class="article_content" data-raw="{{ article['content'] }}"></div>
+    <div class="article_footer">
+        <a href="{{ article['href_ful'] }}">查看全文>></a>
     </div>
 </div>
-<script src="{{ url_for('static', filename='plugin/jQuery/jquery-3.4.0.min.js') }}"></script>
-<script src="{{ url_for('static', filename='plugin/quill/quill.min.js') }}"></script>
-<script src="{{ url_for('static', filename='blogYY/index.js') }}"></script>
-</body>
-</html>
+{% endfor %}
+<div class="page_control" data-page-link="{{ page_link }}" data-current-page="{{ current_page }}"
+     data-total-page="{{ total_page }}">
+    <div class="prev_page">
+        <a class="page_link_disabled">&lt;上一页</a>
+    </div>
+    <div class="page_buttons">
+        <a>1</a>
+        <a class="page_link_disabled">2</a>
+        <a class="page_link_disabled">3</a>
+        <a class="page_link_disabled">4</a>
+        <a class="page_link_disabled">5</a>
+    </div>
+    <div class="next_page">
+        <a class="page_link_disabled">下一页&gt;</a>
+    </div>
+</div>
+{% endblock %}

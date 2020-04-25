@@ -1,0 +1,21 @@
+{% extends "blogYY/base/base_index.html" %}
+
+{% block article %}
+<div class="article">
+    <div class="article_header">
+        <a href="{{ article['href_ful'] }}" target="_blank" class="article_title">{{ article["title"]
+            }}</a>
+        <span class="article_create_time">({{ article["create_time_str"] }})</span>
+        <a href="{{ article['href_mod'] }}" class="modify_article_btn">[编辑]</a>
+        <a href="{{ article['href_del'] }}" class="delete_article_btn">[删除]</a>
+    </div>
+    <div class="article_category">
+        <span>分类：</span>
+        <!-- todo: category_name_href -->
+        <a href="">{{ article["category_name"] }}</a>
+    </div>
+    <div class="article_content" data-raw="{{ article['content'] }}"></div>
+    <div class="article_footer">
+    </div>
+</div>
+{% endblock %}
