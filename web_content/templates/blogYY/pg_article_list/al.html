@@ -3,3 +3,14 @@
 {% block sidebar_modules %}
 {% include "blogYY/sb_article_category/ac.html" %}
 {% endblock %}
+
+{% block body_modules %}
+<ul class="article_info_list">
+    {% for ai in article_info_list %}
+    <li>
+        <a href="{{ ai['href'] }}" target="_blank">{{ ai["article_title"] }}</a>
+        <span>{{ ai["create_time_str"] }}</span>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -7,6 +7,7 @@ from flask import url_for
 from flask import abort
 from web_content import app
 from web_content.src.blogYY.blogYY_service import search_articles
+from web_content.src.blogYY.blogYY_service import search_articles_info
 from web_content.src.blogYY.blogYY_service import search_article_by_id
 from web_content.src.blogYY.blogYY_service import count_articles
 from web_content.src.blogYY.blogYY_service import count_articles_by_category
@@ -97,6 +98,12 @@ def blogYY_page_article_list():
     """
     # get HTTP get parameters
     _category_id = int(request.args["category_id"]) if "category_id" in request.args else None
+    _page_num = int(request.args["page_num"]) if "page_num" in request.args else 1
+    _page_size = int(request.args["page_size"]) if "page_size" in request.args else 50
+    if _page_num <= 0:
+        return abort(400)
+    if _page_size <= 0:
+        return abort(400)
 
     # data processing -> article_counts
     article_counts = count_articles_by_category()
@@ -108,8 +115,18 @@ def blogYY_page_article_list():
         "href": url_for("blogYY_page_article_list")
     })
 
+    # data processing -> article_info_list
+    offset = (_page_num - 1) * _page_size
+    article_info_list = search_articles_info(limit=50, offset=offset, category_id=_category_id)
+    for article_info in article_info_list:
+        article_info["href"] = url_for("blogYY_page_single_article", article_id=article_info["article_id"])
+
     # render page
-    return render_template("blogYY/pg_article_list/al.html", article_counts=article_counts)
+    return render_template(
+        template_name_or_list="blogYY/pg_article_list/al.html",
+        article_counts=article_counts,
+        article_info_list=article_info_list
+    )
 
 
 @app.route("/blogYY/mod_article/<int:article_id>", methods=["GET"])

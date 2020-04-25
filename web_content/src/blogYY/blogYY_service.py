@@ -35,6 +35,45 @@ def search_articles(limit: int, offset: int):
     } for _ in _cursor.fetchall()]
 
 
+def search_articles_info(limit: int, offset: int, category_id=None):
+    """
+    return info of articles
+    """
+    _cursor = g.blogYY_conn.cursor()
+    if category_id is None:
+        _cursor.execute("""
+            SELECT
+                `article`.`id`,  
+                `article`.`title`,
+                `article`.`create_timestamp`
+            FROM 
+                `article` 
+            ORDER BY 
+                `create_timestamp` DESC 
+            LIMIT ? 
+            OFFSET ?;
+            """, (limit, offset))
+    else:
+        _cursor.execute("""
+            SELECT
+                `id`,  
+                `title`,
+                `create_timestamp`
+            FROM 
+                `article` 
+            WHERE
+                `category_id`=?
+            ORDER BY 
+                `create_timestamp` DESC 
+            LIMIT ? 
+            OFFSET ?;""", (category_id, limit, offset))
+    return [{
+        "article_id": _[0],
+        "article_title": _[1],
+        "create_time_str": datetime.fromtimestamp(_[2]).strftime("%Y-%m-%d %H:%M:%S"),
+    } for _ in _cursor.fetchall()]
+
+
 def search_article_by_id(article_id: int):
     """
     search single article by article id
