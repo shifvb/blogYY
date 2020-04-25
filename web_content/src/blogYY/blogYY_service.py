@@ -41,22 +41,28 @@ def search_article_by_id(article_id: int):
     _cursor = g.blogYY_conn.cursor()
     _cursor.execute("""
         SELECT
-            `id`,  
-            `title`,
-            `create_timestamp`,
-            `content`,
-            `category_id`
+            `article`.`id`,  
+            `article`.`title`,
+            `article`.`create_timestamp`,
+            `article`.`content`,
+            `article`.`category_id`,
+            `category`.`name`
         FROM 
-            `article` 
+            `article`
+        INNER JOIN
+            `category`
+        ON
+            `article`.`category_id` = `category`.`id`
         WHERE
-            `id`=?;
+            `article`.`id`=?;
         """, (article_id,))
     return [{
         "id": _[0],
         "title": _[1],
         "create_time_str": datetime.fromtimestamp(_[2]).strftime("%Y-%m-%d %H:%M:%S"),
         "content": _[3],
-        "category_id": _[4]
+        "category_id": _[4],
+        "category_name": _[5]
     } for _ in [_cursor.fetchone()]]
 
 
