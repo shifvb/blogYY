@@ -342,6 +342,43 @@ body {
 
 /* ----------- article end ----------- */
 
+/* ----------- page_control start ----------- */
+.page_control {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.page_buttons {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page_control > div > a {
+    text-decoration: none;
+    background-color: rgb(0, 0, 0, 0.1);
+    color: #595959;
+    border-radius: 3px;
+    font-size: 14px;
+    font-family: Verdana;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 15px;
+    user-select: none;
+}
+
+.page_control > div > .page_link_disabled {
+    color: #a9a9a9;
+}
+
+.page_control > div > .page_link_highlighted {
+    color: red;
+}
+
+
+/* ----------- page_control end ----------- */
+
 /* ----------- footer start ----------- */
 
 .footer_wrapper {

@@ -4,6 +4,7 @@ from flask import render_template
 from flask import request
 from flask import jsonify
 from flask import url_for
+from flask import abort
 from web_content import app
 from web_content.src.blogYY.blogYY_service import search_articles
 from web_content.src.blogYY.blogYY_service import add_article
@@ -11,6 +12,7 @@ from web_content.src.blogYY.blogYY_service import search_article_by_id
 from web_content.src.blogYY.blogYY_service import search_categories
 from web_content.src.blogYY.blogYY_service import update_article_by_id
 from web_content.src.blogYY.blogYY_service import delete_article_by_id
+from web_content.src.blogYY.blogYY_service import count_articles
 
 
 @app.route("/blogYY/article/", methods=["GET"])
@@ -18,9 +20,13 @@ def blogYY_page_article():
     # page limit & offset
     page_size = int(request.args["page_size"]) if "page_size" in request.args else 5
     page_num = int(request.args["page_num"]) if "page_num" in request.args else 1
-    offset = (page_num - 1) * page_size
+    if page_num <= 0:
+        return abort(400)
+    if page_size <= 0:
+        return abort(400)
 
     # data processing -> articles
+    offset = (page_num - 1) * page_size
     articles = search_articles(limit=page_size, offset=offset)
     for article in articles:
         # added href_ful attribute
@@ -29,17 +35,22 @@ def blogYY_page_article():
         _json_obj = json.loads(article["content"])
         _json_obj["ops"] = _json_obj["ops"][:10]
         article["content"] = json.dumps(_json_obj)
-    # data processing -> page_links
-    _start = max(1, page_num - 5)
-    _end = _start + 10
-    page_links = list()
-    for _idx in range(_start, _end):
-        page_links.append({
-            "text": _idx,
-            "href": url_for("blogYY_page_article", page_num=_idx)
-        })
+
+    # page_control
+    article_count = count_articles()
+    total_page = article_count // page_size
+    if total_page % page_size > 0:
+        total_page += 1
+    page_link = url_for("blogYY_page_article")
+
     # render page
-    return render_template("blogYY/index.html", articles=articles, page_links=page_links)
+    return render_template(
+        "blogYY/index.html",
+        articles=articles,
+        page_link=page_link,
+        current_page=page_num,
+        total_page=total_page,
+    )
 
 
 @app.route("/blogYY/article/<int:article_id>", methods=["GET"])

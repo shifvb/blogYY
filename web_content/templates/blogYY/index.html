@@ -88,10 +88,20 @@
                     </div>
                 </div>
                 {% endfor %}
-                <div class="page_control">
-                    {% for page_link in page_links %}
-                    <a href="{{ page_link.href }}">{{ page_link.text }}</a>
-                    {% endfor %}
+                <div class="page_control" data-page-link="{{ page_link }}" data-current-page="{{ current_page }}" data-total-page="{{ total_page }}">
+                    <div class="prev_page">
+                        <a class="page_link_disabled">&lt;上一页</a>
+                    </div>
+                    <div class="page_buttons">
+                        <a>1</a>
+                        <a class="page_link_disabled">2</a>
+                        <a class="page_link_disabled">3</a>
+                        <a class="page_link_disabled">4</a>
+                        <a class="page_link_disabled">5</a>
+                    </div>
+                    <div class="next_page">
+                        <a class="page_link_disabled">下一页&gt;</a>
+                    </div>
                 </div>
             </div>
         </div>

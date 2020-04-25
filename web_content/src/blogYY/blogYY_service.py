@@ -131,3 +131,30 @@ def update_article_by_id(article_id: int, title: str, content: str, category_id:
     ;
     """, (title, content, category_id, article_id))
     g.blogYY_conn.commit()
+
+
+def count_articles(category_id=None):
+    """
+    count articles
+    :param category_id: int, can be set to None if not specify category
+    """
+    _cursor = g.blogYY_conn.cursor()
+    if category_id is None:
+        _cursor.execute("""
+            SELECT
+                COUNT (*)
+            FROM
+                `article`
+            ;
+        """)
+    else:
+        _cursor.execute("""
+            SELECT
+                COUNT (*)
+            FROM
+                `article`
+            WHERE
+                `category_id`=?
+            ;
+        """, (category_id,))
+    return _cursor.fetchone()[0]
