@@ -341,6 +341,7 @@ body {
     justify-content: flex-end;
     border-bottom: 1px dashed rgba(39, 158, 176, 0.2);
     padding-bottom: 15px;
+    margin-top: 15px;
 }
 
 .article > .article_footer > a {
