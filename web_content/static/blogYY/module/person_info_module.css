@@ -1,0 +1,11 @@
+.personal_info > .avatar {
+    margin: 11px 14px 0 14px;
+}
+
+.personal_info > .nickname {
+    display: block;
+    text-align: center;
+    color: #637160;
+    margin-top: 7px;
+    font-weight: 700;
+}

@@ -50,12 +50,7 @@
     <div class="blog_body_wrapper">
         <div class="blog_body">
             <div class="sidebar">
-                {% block sidebar %}
-                <div class="sidebar_module personal_info">
-                    <span class="sidebar_title">个人资料</span>
-                    <img class="avatar" src="{{ url_for('static', filename='blogYY/personal_info_img.jpg') }}" alt="">
-                    <span class="nickname">伟大的博弈-于跃</span>
-                </div>
+                {% block person_info_module %}
                 {% endblock %}
             </div>
             {% block article_module %}
