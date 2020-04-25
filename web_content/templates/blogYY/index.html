@@ -1,14 +1,8 @@
-{% extends "blogYY/base/base_index.html" %}
+{% extends "blogYY/base/index_base.html" %}
 
-{% block head %}
-{{ super() }}
-<!-- restrict article max height to 500px -->
-<style>
-    .article > .article_content {
-        max-height: 500px;
-        overflow: hidden;
-    }
-</style>
+{% block css_block %}
+<link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/index/index.css') }}">
 {% endblock %}
 
 {% block articles %}
@@ -47,4 +41,10 @@
         <a class="page_link_disabled">下一页&gt;</a>
     </div>
 </div>
+{% endblock %}
+
+{% block js_block %}
+{{ super() }}
+<script src="{{ url_for('static', filename='plugin/quill/quill.min.js') }}"></script>
+<script src="{{ url_for('static', filename='blogYY/index/index.js') }}"></script>
 {% endblock %}

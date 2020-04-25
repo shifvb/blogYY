@@ -1,10 +1,14 @@
-{% extends "blogYY/base/base_index.html" %}
+{% extends "blogYY/base/index_base.html" %}
+
+{% block css_block %}
+<link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/single_article/single_article.css') }}">
+{% endblock %}
 
 {% block article %}
 <div class="article">
     <div class="article_header">
-        <a href="{{ article['href_ful'] }}" target="_blank" class="article_title">{{ article["title"]
-            }}</a>
+        <a href="{{ article['href_ful'] }}" target="_blank" class="article_title">{{ article["title"]}}</a>
         <span class="article_create_time">({{ article["create_time_str"] }})</span>
         <a href="{{ article['href_mod'] }}" class="modify_article_btn">[编辑]</a>
         <a href="{{ article['href_del'] }}" class="delete_article_btn">[删除]</a>
@@ -18,4 +22,10 @@
     <div class="article_footer">
     </div>
 </div>
+{% endblock %}
+
+{% block js_block %}
+{{ super() }}
+<script src="{{ url_for('static', filename='plugin/quill/quill.min.js') }}"></script>
+<script src="{{ url_for('static', filename='blogYY/single_article/single_article.js') }}"></script>
 {% endblock %}

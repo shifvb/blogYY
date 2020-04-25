@@ -5,25 +5,6 @@ $(function(){
         x.removeAttribute("data-raw");
     });
 
-    // 删除article按钮鼠标单击事件绑定
-    $(".article .delete_article_btn").on("click", function() {
-        if (!confirm("确定删除？")) {
-            return false; // 停止链接跳转
-        }
-        $.ajax({
-            "url": $(this).attr("href"),
-            "type": "POST",
-            "success": function(rsp) {
-                alert("删除成功！");
-                location.href = "/blogYY/article/"
-            },
-            "error": function(rsp) {
-                alert("请求错误，请稍后再试！");
-            }
-        })
-        return false; // 停止链接跳转
-    });
-
     // 处理翻页按钮
     var _page_data = document.querySelector(".page_control").dataset;
     var current_page = Number(_page_data.currentPage);
@@ -63,5 +44,4 @@ $(function(){
             x.classList.add("page_link_highlighted")
         }
     });
-
 });
