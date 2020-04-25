@@ -168,20 +168,3 @@ def count_articles(category_id=None):
             ;
         """, (category_id,))
     return _cursor.fetchone()[0]
-
-
-def search_category_name_by_id(category_id):
-    """
-    search category name name by id
-    """
-    _cursor = g.blogYY_conn.cursor()
-    _cursor.execute("""
-        SELECT
-            `name`
-        FROM
-            `category`
-        WHERE
-            `id`=?
-        ;
-        """, (category_id,))
-    return _cursor.fetchone()[0]
