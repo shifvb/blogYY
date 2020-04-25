@@ -29,6 +29,7 @@ body {
     background-repeat: no-repeat;
     background-position: center 30px;
     width: 100%;
+    min-height: 1000px;
 }
 
 /* ----------- compatible content start ----------- */
