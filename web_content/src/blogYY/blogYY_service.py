@@ -184,7 +184,7 @@ def update_article_by_id(article_id: int, title: str, content: str, category_id:
     g.blogYY_conn.commit()
 
 
-def count_articles(category_id=None):
+def count_articles_by_category_id(category_id=None):
     """
     count articles
     :param category_id: int, can be set to None if not specify category
@@ -211,7 +211,7 @@ def count_articles(category_id=None):
     return _cursor.fetchone()[0]
 
 
-def count_articles_by_category():
+def group_articles_by_category_id():
     """
     search the count of each category
     :return:

@@ -1,16 +1,45 @@
 {% extends "blogYY/base/index_base.html" %}
 
+{% block css_block %}
+<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/pg_article_list/al.css') }}">
+{% endblock %}
+
 {% block sidebar_modules %}
 {% include "blogYY/sb_article_category/ac.html" %}
 {% endblock %}
 
 {% block body_modules %}
-<ul class="article_info_list">
-    {% for ai in article_info_list %}
-    <li>
-        <a href="{{ ai['href'] }}" target="_blank">{{ ai["article_title"] }}</a>
-        <span>{{ ai["create_time_str"] }}</span>
-    </li>
-    {% endfor %}
-</ul>
+<div class="article_info_list_wrapper">
+    <div class="article_info_list_header">
+        全部博文
+    </div>
+    <ul class="article_info_list">
+        {% for ai in article_info_list %}
+        <li>
+            <span>·<a href="{{ ai['href'] }}" target="_blank">{{ ai["article_title"] }}</a></span>
+            <span class="create_time_str">{{ ai["create_time_str"] }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="page_control" data-page-link="{{ page_link }}" data-current-page="{{ current_page }}"
+         data-total-page="{{ total_page }}">
+        <div class="prev_page">
+            <a class="page_link_disabled">&lt;上一页</a>
+        </div>
+        <div class="page_buttons">
+            <a>1</a>
+            <a class="page_link_disabled">2</a>
+            <a class="page_link_disabled">3</a>
+            <a class="page_link_disabled">4</a>
+            <a class="page_link_disabled">5</a>
+        </div>
+        <div class="next_page">
+            <a class="page_link_disabled">下一页&gt;</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_block %}
+<script src="{{ url_for('static', filename='blogYY/pg_article_list/al.js') }}"></script>
 {% endblock %}

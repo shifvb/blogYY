@@ -9,8 +9,8 @@ from web_content import app
 from web_content.src.blogYY.blogYY_service import search_articles
 from web_content.src.blogYY.blogYY_service import search_articles_info
 from web_content.src.blogYY.blogYY_service import search_article_by_id
-from web_content.src.blogYY.blogYY_service import count_articles
-from web_content.src.blogYY.blogYY_service import count_articles_by_category
+from web_content.src.blogYY.blogYY_service import count_articles_by_category_id
+from web_content.src.blogYY.blogYY_service import group_articles_by_category_id
 from web_content.src.blogYY.blogYY_service import add_article
 from web_content.src.blogYY.blogYY_service import delete_article_by_id
 from web_content.src.blogYY.blogYY_service import update_article_by_id
@@ -41,7 +41,7 @@ def blogYY_page_blog_index():
         article["content"] = json.dumps(_json_obj)
 
     # data processing -> page_control
-    article_count = count_articles()
+    article_count = count_articles_by_category_id()
     total_page = article_count // page_size
     if total_page % page_size > 0:
         total_page += 1
@@ -97,16 +97,16 @@ def blogYY_page_article_list():
     :return: rendered article list apge
     """
     # get HTTP get parameters
-    _category_id = int(request.args["category_id"]) if "category_id" in request.args else None
-    _page_num = int(request.args["page_num"]) if "page_num" in request.args else 1
-    _page_size = int(request.args["page_size"]) if "page_size" in request.args else 50
-    if _page_num <= 0:
+    category_id = int(request.args["category_id"]) if "category_id" in request.args else None
+    page_num = int(request.args["page_num"]) if "page_num" in request.args else 1
+    page_size = int(request.args["page_size"]) if "page_size" in request.args else 20
+    if page_num <= 0:
         return abort(400)
-    if _page_size <= 0:
+    if page_size <= 0:
         return abort(400)
 
     # data processing -> article_counts
-    article_counts = count_articles_by_category()
+    article_counts = group_articles_by_category_id()
     for article_count in article_counts:
         article_count["href"] = url_for("blogYY_page_article_list", category_id=article_count["category_id"])
     article_counts.insert(0, {
@@ -116,16 +116,26 @@ def blogYY_page_article_list():
     })
 
     # data processing -> article_info_list
-    offset = (_page_num - 1) * _page_size
-    article_info_list = search_articles_info(limit=50, offset=offset, category_id=_category_id)
+    offset = (page_num - 1) * page_size
+    article_info_list = search_articles_info(limit=page_size, offset=offset, category_id=category_id)
     for article_info in article_info_list:
         article_info["href"] = url_for("blogYY_page_single_article", article_id=article_info["article_id"])
+
+    # data processing -> page control
+    article_count = count_articles_by_category_id(category_id)
+    total_page = article_count // page_size
+    if total_page % page_size > 0:
+        total_page += 1
+    page_link = url_for("blogYY_page_blog_index")
 
     # render page
     return render_template(
         template_name_or_list="blogYY/pg_article_list/al.html",
         article_counts=article_counts,
-        article_info_list=article_info_list
+        article_info_list=article_info_list,
+        total_page=total_page,
+        current_page=page_num,
+        page_link=page_link
     )
 
 
