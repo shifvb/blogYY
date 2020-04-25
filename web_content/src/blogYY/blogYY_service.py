@@ -172,7 +172,7 @@ def count_articles(category_id=None):
     return _cursor.fetchone()[0]
 
 
-def search_articles_group_by_category():
+def count_articles_by_category():
     """
     search the count of each category
     :return:

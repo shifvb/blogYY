@@ -7,13 +7,13 @@ from flask import url_for
 from flask import abort
 from web_content import app
 from web_content.src.blogYY.blogYY_service import search_articles
-from web_content.src.blogYY.blogYY_service import add_article
 from web_content.src.blogYY.blogYY_service import search_article_by_id
-from web_content.src.blogYY.blogYY_service import search_categories
-from web_content.src.blogYY.blogYY_service import update_article_by_id
-from web_content.src.blogYY.blogYY_service import delete_article_by_id
 from web_content.src.blogYY.blogYY_service import count_articles
-from web_content.src.blogYY.blogYY_service import search_articles_group_by_category
+from web_content.src.blogYY.blogYY_service import count_articles_by_category
+from web_content.src.blogYY.blogYY_service import add_article
+from web_content.src.blogYY.blogYY_service import delete_article_by_id
+from web_content.src.blogYY.blogYY_service import update_article_by_id
+from web_content.src.blogYY.blogYY_service import search_categories
 
 
 @app.route("/blogYY/blog_index", methods=["GET"])
@@ -99,7 +99,7 @@ def blogYY_page_article_list():
     _category_id = int(request.args["category_id"]) if "category_id" in request.args else None
 
     # data processing -> article_counts
-    article_counts = search_articles_group_by_category()
+    article_counts = count_articles_by_category()
     for article_count in article_counts:
         article_count["href"] = url_for("blogYY_page_article_list", category_id=article_count["category_id"])
     article_counts.insert(0, {
