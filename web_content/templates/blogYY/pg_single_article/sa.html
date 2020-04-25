@@ -2,9 +2,8 @@
 
 {% block css_block %}
 <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/module/article_module.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/sb_person_info/pi.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/single_article/single_article.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='blogYY/pg_single_article/sa.css') }}">
 {% endblock %}
 
 {% block person_info_module %}
@@ -35,5 +34,5 @@
 {% block js_block %}
 {{ super() }}
 <script src="{{ url_for('static', filename='plugin/quill/quill.min.js') }}"></script>
-<script src="{{ url_for('static', filename='blogYY/single_article/single_article.js') }}"></script>
+<script src="{{ url_for('static', filename='blogYY/pg_single_article/sa.js') }}"></script>
 {% endblock %}

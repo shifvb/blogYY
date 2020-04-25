@@ -1,4 +1,0 @@
-/* bug fix: change padding & margin of DOM element ql-editor in Quill */
-.ql-editor {
-    padding: 0;
-}
