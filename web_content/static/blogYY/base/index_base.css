@@ -32,12 +32,6 @@ body {
     min-height: 1000px;
 }
 
-/* ----------- compatible content start ----------- */
-.compatible_head {
-    display: none;
-}
-/* ----------- compatible content end ----------- */
-
 /* ----------- navigate bar start ----------- */
 .nav_wrapper {
     width: 100%;
