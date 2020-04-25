@@ -75,7 +75,7 @@ def blogYY_page_add_article():
     :return: rendered added article page
     """
     return render_template(
-        template_name_or_list="blogYY/add_article.html",
+        template_name_or_list="blogYY/pg_add_article/aa.html",
         title="",
         content="",
         category_id=1,
