@@ -11,7 +11,7 @@
 {% block body_modules %}
 <div class="article_info_list_wrapper">
     <div class="article_info_list_header">
-        全部博文
+        {{ this_article_count["category_name"] }} ({{ this_article_count["article_count"] }})
     </div>
     <ul class="article_info_list">
         {% for ai in article_info_list %}

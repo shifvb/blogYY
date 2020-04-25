@@ -110,10 +110,14 @@ def blogYY_page_article_list():
     for article_count in article_counts:
         article_count["href"] = url_for("blogYY_page_article_list", category_id=article_count["category_id"])
     article_counts.insert(0, {
+        "category_id": None,
         "category_name": "全部博文",
         "article_count": sum([_["article_count"] for _ in article_counts]),
         "href": url_for("blogYY_page_article_list")
     })
+    for article_count in article_counts:
+        if article_count["category_id"] == category_id:
+            this_article_count = article_count
 
     # data processing -> article_info_list
     offset = (page_num - 1) * page_size
@@ -133,6 +137,7 @@ def blogYY_page_article_list():
         template_name_or_list="blogYY/pg_article_list/al.html",
         article_counts=article_counts,
         article_info_list=article_info_list,
+        this_article_count=this_article_count,
         total_page=total_page,
         current_page=page_num,
         page_link=page_link

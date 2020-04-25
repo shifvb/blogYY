@@ -1,14 +1,21 @@
 /* ---------- article_info_list start ----------*/
 .article_info_list_wrapper {
     width: 728px;
-    padding: 20px 20px;
+    padding: 15px 15px;
     margin-left: 10px;
     border: 1px solid rgba(121, 103, 0, 0.141);
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+.article_info_list_wrapper > .article_info_list_header {
+    color: #7c6833;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
 .article_info_list {
     list-style: none;
+    margin: 0 10px;
 }
 
 .article_info_list > li {
