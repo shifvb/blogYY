@@ -15,8 +15,8 @@ from web_content.src.blogYY.blogYY_service import delete_article_by_id
 from web_content.src.blogYY.blogYY_service import count_articles
 
 
-@app.route("/blogYY/article/", methods=["GET"])
-def blogYY_page_article():
+@app.route("/blogYY/blog_index", methods=["GET"])
+def blogYY_page_blog_index():
     # page limit & offset
     page_size = int(request.args["page_size"]) if "page_size" in request.args else 5
     page_num = int(request.args["page_num"]) if "page_num" in request.args else 1
@@ -41,7 +41,7 @@ def blogYY_page_article():
     total_page = article_count // page_size
     if total_page % page_size > 0:
         total_page += 1
-    page_link = url_for("blogYY_page_article")
+    page_link = url_for("blogYY_page_blog_index")
 
     # render page
     return render_template(
@@ -80,9 +80,18 @@ def blogYY_page_add_article():
         content="",
         category_id=1,
         submit_url=url_for('blogYY_api_add_article_v1'),
-        redirect_url=url_for('blogYY_page_article'),
+        redirect_url=url_for('blogYY_page_blog_index'),
         categories=search_categories()
     )
+
+
+@app.route("/blogYY/article_list", methods=["GET"])
+def blogYY_page_article_list():
+    """
+    rendering article list page
+    :return: rendered article list apge
+    """
+    return render_template("blogYY/pg_article_list/al.html")
 
 
 @app.route("/blogYY/mod_article/<int:article_id>", methods=["GET"])
