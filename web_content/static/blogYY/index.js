@@ -2,6 +2,7 @@ $(function(){
     // 使用quill解释文章内容
     document.querySelectorAll(".article_content").forEach(function(x) {
         new Quill(x).setContents(JSON.parse(x.dataset.raw));
+        x.removeAttribute("data-raw");
     });
 
     // 删除article按钮鼠标单击事件绑定
