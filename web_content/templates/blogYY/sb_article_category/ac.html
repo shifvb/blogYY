@@ -1,8 +1,9 @@
 <div class="sidebar_module article_category">
-    <span class="sidebar_title">博文</span>
-    <ul>
+    <div>博文</div>
+    <ul class="article_category_list">
         {% for ac in article_counts %}
         <li>
+            <span>·</span>
             <a href="{{ ac['href'] }}">{{ ac["category_name"] }}</a>
             <span>({{ ac["article_count"] }})</span>
         </li>

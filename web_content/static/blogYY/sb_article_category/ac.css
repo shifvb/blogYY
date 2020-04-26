@@ -1,0 +1,35 @@
+/* ---------- sidebar module -> article_category start ----------*/
+.article_category {
+    padding: 15px;
+}
+
+.article_category > div {
+    color: #7c6833;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.article_category_list {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.article_category_list > li {
+    margin-top: 10px;
+}
+
+.article_category_list > li > a {
+    text-decoration: none;
+    color: #279eb0;
+    font-size: 16px;
+}
+
+.article_category_list > li > a:hover {
+    text-decoration: underline;
+}
+
+.article_category_list > li > span {
+    color: #7c6833;
+    font-size: 16px;
+}
+/* ---------- sidebar module -> article_category end ----------*/
