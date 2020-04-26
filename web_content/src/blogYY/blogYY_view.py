@@ -45,14 +45,11 @@ def blogYY_page_blog_index():
     total_page = article_count // page_size
     if article_count % page_size > 0:
         total_page += 1
-    page_link = url_for("blogYY_page_blog_index")
 
     # render page
     return render_template(
         "blogYY/pg_blog_index/bi.html",
         articles=articles,
-        page_link=page_link,
-        current_page=page_num,
         total_page=total_page
     )
 
