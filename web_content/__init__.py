@@ -1,10 +1,10 @@
+import os
 import sqlite3
 from flask import g, Flask
 
 # general config
 app = Flask(__name__)
-with open("secret_key", 'rb') as f:
-    app.secret_key = f.read()
+app.secret_key = os.urandom(64)
 
 # import views
 import web_content.src.blogYY.blogYY_view

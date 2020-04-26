@@ -108,6 +108,5 @@ venv.bak/
 
 # project-related
 database/blogYY/blogYY.db
-web_content/secret_key
 web_content/static/plugin/
 
