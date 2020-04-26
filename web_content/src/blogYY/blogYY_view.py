@@ -43,7 +43,7 @@ def blogYY_page_blog_index():
     # data processing -> page_control
     article_count = count_articles_by_category_id()
     total_page = article_count // page_size
-    if total_page % page_size > 0:
+    if article_count % page_size > 0:
         total_page += 1
     page_link = url_for("blogYY_page_blog_index")
 
@@ -128,9 +128,8 @@ def blogYY_page_article_list():
     # data processing -> page control
     article_count = count_articles_by_category_id(category_id)
     total_page = article_count // page_size
-    if total_page % page_size > 0:
+    if article_count % page_size > 0:
         total_page += 1
-    page_link = url_for("blogYY_page_article_list")
 
     # render page
     return render_template(
@@ -139,8 +138,6 @@ def blogYY_page_article_list():
         article_info_list=article_info_list,
         this_article_count=this_article_count,
         total_page=total_page,
-        current_page=page_num,
-        page_link=page_link
     )
 
 

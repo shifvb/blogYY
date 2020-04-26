@@ -1,9 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
     // 处理翻页按钮
-    var _page_data = document.querySelector(".page_control").dataset;
-    var current_page = Number(_page_data.currentPage);
-    var total_page = Number(_page_data.totalPage);
-    var page_link = _page_data.pageLink + "?page_num=";
+    var total_page = Number(document.querySelector(".page_control").dataset.totalPage);
+    // 处理可能出现的url参数
+    var _arr = [];
+    var current_page = 1; // 如果没有出现url参数，那么默认为第1页
+    if (location.href.indexOf("?") >= 0) {
+        var _params = location.href.split("?")[1].split("&");
+        for (var i = 0; i < _params.length; ++i) {
+            // 记录page_num参数的值至current_page，其余加入数组_arr
+            if (_params[i].indexOf("page_num=") != -1) {
+                var current_page = Number(_params[i].split("=")[1]);
+            } else {
+                _arr.push(_params[i]);
+            }
+        }
+    }
+    // 处理page_num参数
+    _arr.push("page_num=")
+    // 合成page_link变量
+    var page_link = location.pathname + "?" + _arr.join("&");
+
     // 设置上一页按钮
     if (current_page >= 2) {
         var _prev_btn = document.querySelector(".prev_page > a");
@@ -25,16 +41,13 @@ document.addEventListener("DOMContentLoaded", function() {
         offset -= (current_page + 2 - total_page);
     }
     document.querySelectorAll(".page_buttons > a").forEach(function(x, i) { // 应用offset
-        var _ = String(current_page + i - 2 + offset);
+        var _ = current_page + i - 2 + offset;
         x.innerText = _;
-        x.setAttribute("href", page_link + _)
-    });
-    // 设置临近页按钮样式
-    document.querySelectorAll(".page_buttons > a").forEach(function(x) {
-        if (Number(x.innerText) <= total_page) {
+        if (_ <= total_page) {
             x.classList.remove("page_link_disabled");
+            x.setAttribute("href", page_link + _);
         }
-        if (Number(x.innerText) == current_page) {
+        if (x.innerText == current_page) {
             x.classList.add("page_link_highlighted")
         }
     });
