@@ -130,7 +130,7 @@ def blogYY_page_article_list():
     total_page = article_count // page_size
     if total_page % page_size > 0:
         total_page += 1
-    page_link = url_for("blogYY_page_blog_index")
+    page_link = url_for("blogYY_page_article_list")
 
     # render page
     return render_template(
