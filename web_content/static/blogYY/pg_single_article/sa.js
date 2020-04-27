@@ -13,6 +13,9 @@ $(function() {
         $.ajax({
             "url": $(this).attr("href"),
             "type": "POST",
+            "headers": {
+                "X-CSRFToken": document.querySelector("meta[name=csrf-token]").getAttribute("content")
+            },
             "success": function(rsp) {
                 alert("删除成功！");
                 location.href = rsp["href"];
