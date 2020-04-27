@@ -1,5 +1,7 @@
 # models.py
-
+import uuid
+from flask import g
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 from flask_login import UserMixin
@@ -61,7 +63,6 @@ class User(UserMixin):
             return None
         except ValueError:
             return None
-        return None
 
     def get_id(self):
         """
@@ -69,17 +70,17 @@ class User(UserMixin):
         uuid for the user.
         :return:
         """
-        if self.username is not None:
-            try:
-                with open(PROFILE_FILE) as f:
-                    user_profiles = json.load(f)
-                    if self.username in user_profiles:
-                        return user_profiles[self.username][1]
-            except IOError:
-                pass
-            except ValueError:
-                pass
-        return str(uuid.uuid4())
+        if self.username is None:
+            return str(uuid.uuid4())
+
+        _cursor = g.blogYY_conn.cursor()
+        _cursor.execute("""SELECT `uuid` FROM `user` WHERE `username`=?;""", (self.username,))
+        _user_info_tuple = _cursor.fetchone()
+
+        if _user_info_tuple is not None:
+            return _user_info_tuple[0]
+        else:
+            return str(uuid.uuid4())
 
     @staticmethod
     def get(user_id):
