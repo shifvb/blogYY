@@ -23,10 +23,19 @@ login_manager.login_view = 'blogYY_page_user_login'
 login_manager.init_app(app)
 
 
+class User(UserMixin):
+    def __init__(self, uuid_str: str):
+        self.uuid_str = uuid_str
+        self.username = search_user_by_uuid_str(uuid_str)['username']
+
+    def get_id(self):
+        return self.uuid_str
+
+
 # 这个callback函数用于reload User object，根据session中存储的user id
 @login_manager.user_loader
 def user_loader(user_id):
-    return User(search_user_by_uuid_str(user_id)['username'])
+    return User(user_id)
 
 
 @app.route("/blogYY/login", methods=["GET"])
@@ -72,11 +81,3 @@ def blogYY_page_user_logout():
     """
     logout_user()
     return redirect(url_for("blogYY_page_blog_index"))
-
-
-class User(UserMixin):
-    def __init__(self, uuid_str: str):
-        self.uuid_str = uuid_str
-
-    def get_id(self):
-        return self.uuid_str
