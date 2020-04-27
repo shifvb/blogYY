@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from flask import g, Flask
+from flask_wtf.csrf import CSRFProtect
 
 # general config
 app = Flask(__name__)
@@ -9,6 +10,10 @@ app.secret_key = os.urandom(64)
 # import views
 import web_content.src.blogYY.blogYY_view
 import web_content.src.blogYY.mod_user.login
+
+# csrf protect
+CSRFProtect().init_app(app)
+
 
 # establish database connection
 @app.before_request

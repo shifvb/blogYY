@@ -4,9 +4,7 @@ from flask import redirect
 from flask import url_for
 from flask_login import login_user, login_required
 from flask_login.login_manager import LoginManager
-from flask_login import current_user
 from flask_login import logout_user
-from flask_wtf.csrf import CSRFProtect
 from web_content import app
 from web_content.src.blogYY.mod_user.forms import LoginForm
 from web_content.src.blogYY.mod_user.models import User
@@ -26,11 +24,6 @@ login_manager.init_app(app=app)
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
-
-
-# csrf protection
-csrf = CSRFProtect()
-csrf.init_app(app)
 
 
 @app.route("/blogYY/login", methods=["GET", "POST"])
