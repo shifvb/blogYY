@@ -15,7 +15,7 @@ from flask import url_for
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'blogYY_page_user_login'
-login_manager.init_app(app=app)
+login_manager.init_app(app)
 
 
 # 这个callback函数用于reload User object，根据session中存储的user id
@@ -24,27 +24,47 @@ def user_loader(user_id):
     return User.get(user_id)
 
 
-@app.route("/blogYY/login", methods=["GET", "POST"])
+@app.route("/blogYY/login", methods=["GET"])
 def blogYY_page_user_login():
     """
     用户登录页面
     """
-    if request.method == "POST":
-        username = request.form.get('username', None)
-        password = request.form.get('password', None)
-        remember_me = request.form.get('remember_me', False)
-        user = User(username)
-        if user.verify_password(password):
-            login_user(user, remember=remember_me)
-            return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
     return render_template("blogYY/pg_login/login.html")
 
 
-@app.route("/logout")
+@app.route("/blogYY/api/v1/login", methods=["POST"])
+def blogYY_api_user_login_v1():
+    """
+    api for user login
+    :param username: username, str
+    :param password: password, str
+    :param remember_me: remember me, str
+    :param csrf_token: csrf token
+    :return:
+        HTTP redirect to:
+            request.args.get('next'), if specified 'next' parameter
+        or:
+            url_for("blogYY_page_log_index"), if not specified 'next' parameter
+    """
+    username = request.form.get('username', None)
+    password = request.form.get('password', None)
+    remember_me = request.form.get('remember_me', False)
+    user = User(username)
+    if user.verify_password(password):
+        login_user(user, remember=remember_me)
+        return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
+
+
+@app.route("/blogYY/api/v1/logout")
 @login_required
 def blogYY_page_user_logout():
+    """
+    api for user logout
+    :return:
+        HTTP redirect to url_for("blogYY_page_log_index")
+    """
     logout_user()
-    return redirect(url_for("blogYY_page_user_login"))
+    return redirect(url_for("blogYY_page_blog_index"))
 
 
 # models.py
