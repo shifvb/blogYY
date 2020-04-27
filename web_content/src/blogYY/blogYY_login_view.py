@@ -52,7 +52,8 @@ def blogYY_api_user_login_v1():
     password = request.form.get('password', None)
     remember_me = request.form.get('remember_me', False)
     user = User(username)
-    if user.verify_password(password):
+    _user_info = search_user_by_username(username=username)
+    if _user_info and check_password_hash(pwhash=_user_info["password_hash"], password=password):
         login_user(user, remember=remember_me)
         return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
     else:
@@ -83,18 +84,6 @@ class User(UserMixin):
     def __init__(self, username):
         self.username = username
         self.id = self.get_id()
-
-    def verify_password(self, password):
-        # todo: remove it
-        print("[DEBUG] function call 'verify_password': self.username={}".format(self.username))
-        _user_info_tuple = search_user_by_username(self.username)
-        if _user_info_tuple is not None:
-            password_hash = _user_info_tuple["password_hash"]
-        else:
-            password_hash = None
-        if password_hash is None:
-            return False
-        return check_password_hash(password_hash, password)
 
     def get_id(self):
         """
