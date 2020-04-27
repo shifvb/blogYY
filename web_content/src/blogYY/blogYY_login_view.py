@@ -6,6 +6,8 @@ from flask_login import login_user, login_required
 from flask import redirect
 from flask_login import logout_user
 from flask import url_for
+from web_content.src.blogYY.blogYY_login_service import search_user_by_username
+from web_content.src.blogYY.blogYY_login_service import search_user_by_uuid_str
 
 # use login manager to manage session
 # 维护用户的会话，关键就在于这个LoginManager对象
@@ -21,7 +23,7 @@ login_manager.init_app(app)
 # 这个callback函数用于reload User object，根据session中存储的user id
 @login_manager.user_loader
 def user_loader(user_id):
-    return User.get(user_id)
+    return User(search_user_by_uuid_str(user_id)['username'])
 
 
 @app.route("/blogYY/login", methods=["GET"])
@@ -53,6 +55,8 @@ def blogYY_api_user_login_v1():
     if user.verify_password(password):
         login_user(user, remember=remember_me)
         return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
+    else:
+        return redirect(url_for("blogYY_page_user_login"))
 
 
 @app.route("/blogYY/api/v1/logout")
@@ -124,23 +128,3 @@ class User(UserMixin):
             return _user_info_tuple[0]
         else:
             return str(uuid.uuid4())
-
-    @staticmethod
-    def get(user_id):
-        """
-        try to return user_id corresponding user object.
-        This method is used by load_user callback function
-        :param user_id:
-        :return:
-        """
-        if not user_id:
-            return None
-        try:
-            _cursor = g.blogYY_conn.cursor()
-            _cursor.execute("""SELECT `username` FROM `user` WHERE `uuid`=?;""", (user_id,))
-            _user_info_tuple = _cursor.fetchone()
-            if _user_info_tuple is not None:
-                return User(_user_info_tuple[0])
-        except:
-            return None
-        return None
