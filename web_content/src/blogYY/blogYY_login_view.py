@@ -29,8 +29,7 @@ def blogYY_page_user_login():
     """
     用户登录页面
     """
-    form = LoginForm()
-    if form.validate_on_submit():
+    if request.method == "POST":
         username = request.form.get('username', None)
         password = request.form.get('password', None)
         remember_me = request.form.get('remember_me', False)
@@ -38,7 +37,7 @@ def blogYY_page_user_login():
         if user.verify_password(password):
             login_user(user, remember=remember_me)
             return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
-    return render_template("blogYY/pg_login/login.html", form=form)
+    return render_template("blogYY/pg_login/login.html")
 
 
 @app.route("/logout")
@@ -46,20 +45,6 @@ def blogYY_page_user_login():
 def blogYY_page_user_logout():
     logout_user()
     return redirect(url_for("blogYY_page_user_login"))
-
-
-# forms.py
-from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, PasswordField
-from wtforms.validators import DataRequired
-
-
-# 定义的表单都需要继承自FlaskForm
-class LoginForm(FlaskForm):
-    # 域初始化时，第一个参数用于设置label属性
-    username = StringField("User Name", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    remember_me = BooleanField("remember me", default=False)
 
 
 # models.py
