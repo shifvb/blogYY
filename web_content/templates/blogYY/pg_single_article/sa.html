@@ -16,8 +16,10 @@
         <div class="article_header">
             <a href="{{ article['href_ful'] }}" target="_blank" class="article_title">{{ article["title"]}}</a>
             <span class="article_create_time">({{ article["create_time_str"] }})</span>
+            {% if current_user.is_active %}
             <a href="{{ article['href_mod'] }}" class="modify_article_btn">[编辑]</a>
             <a href="{{ article['href_del'] }}" class="delete_article_btn">[删除]</a>
+            {% endif %}
         </div>
         <div class="article_category">
             <span>分类：</span>

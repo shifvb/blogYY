@@ -53,7 +53,8 @@ def blogYY_page_blog_index():
     return render_template(
         "blogYY/pg_blog_index/bi.html",
         articles=articles,
-        total_page=total_page
+        total_page=total_page,
+        current_user=current_user
     )
 
 
@@ -68,9 +69,8 @@ def blogYY_page_single_article(article_id):
     article["href_mod"] = url_for("blogYY_page_mod_article", article_id=article["id"])
     article["href_del"] = url_for("blogYY_api_del_article_v1", article_id=article["id"])
     article["category_href"] = url_for("blogYY_page_article_list", category_id=article["category_id"])
-
     # render template
-    return render_template("blogYY/pg_single_article/sa.html", article=article)
+    return render_template("blogYY/pg_single_article/sa.html", article=article, current_user=current_user)
 
 
 @app.route("/blogYY/add_article", methods=["GET"])

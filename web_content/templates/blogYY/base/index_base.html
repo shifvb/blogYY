@@ -19,9 +19,14 @@
                 </li>
             </ul>
             <ul class="nav_list_right">
-                <li class="nav_to_index"><a href="">首页</a></li>
-                <li class="nav_login"><a href="">登录</a></li>
+                <li class="nav_to_index"><a href="{{ url_for('blogYY_page_blog_index') }}">首页</a></li>
+                {% if current_user.is_active %}
+                <li class="nav_user_center"><a href="">{{ current_user.username }}</a></li>
+                <li class="nav_logout"><a href="">退出</a></li>
+                {% else %}
+                <li class="nav_login"><a href="{{ url_for('blogYY_page_login') }}">登录</a></li>
                 <li class="nav_register"><a href="">注册</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
