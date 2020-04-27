@@ -56,7 +56,7 @@ def blogYY_api_user_login_v1():
     remember_me = request.form.get('remember_me', False)
     _user_info = search_user_by_username(username=username)
     if _user_info and check_password_hash(pwhash=_user_info["password_hash"], password=password):
-        login_user(User(username), remember=remember_me)
+        login_user(User(_user_info["uuid"]), remember=remember_me)
         return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
     else:
         return redirect(url_for("blogYY_page_user_login"))
@@ -75,22 +75,8 @@ def blogYY_page_user_logout():
 
 
 class User(UserMixin):
-    def __init__(self, username):
-        self.username = username
-        self.id = self.get_id()
+    def __init__(self, uuid_str: str):
+        self.uuid_str = uuid_str
 
     def get_id(self):
-        """
-        get user id from profile file. If not exist, it will generate a
-        uuid for the user.
-        :return:
-        """
-        # todo: remove it
-        print("[DEBUG] function call 'get_id': self.username={}".format(self.username))
-        if self.username is None:
-            return str(uuid.uuid4())
-        _user_info_tuple = search_user_by_username(self.username)
-        if _user_info_tuple is not None:
-            return _user_info_tuple["uuid"]
-        else:
-            return str(uuid.uuid4())
+        return self.uuid_str
