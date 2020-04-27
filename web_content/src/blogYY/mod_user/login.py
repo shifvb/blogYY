@@ -18,7 +18,7 @@ from web_content.src.blogYY.mod_user.models import User
 # 这时用户在会话中的状态就是登录状态了
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
-login_manager.login_view = 'blogYY_page_login'
+login_manager.login_view = 'blogYY_page_user_login'
 login_manager.init_app(app=app)
 
 
@@ -34,7 +34,7 @@ csrf.init_app(app)
 
 
 @app.route("/blogYY/login", methods=["GET", "POST"])
-def blogYY_page_login():
+def blogYY_page_user_login():
     """
     用户登录页面
     """
@@ -48,3 +48,10 @@ def blogYY_page_login():
             login_user(user, remember=remember_me)
             return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
     return render_template("blogYY/pg_login/login.html", form=form)
+
+
+@app.route("/logout")
+@login_required
+def blogYY_page_user_logout():
+    logout_user()
+    return redirect(url_for("blogYY_page_user_login"))
