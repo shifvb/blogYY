@@ -1,3 +1,4 @@
+import uuid
 from flask import render_template
 from web_content import app
 from flask_login.login_manager import LoginManager
@@ -6,6 +7,8 @@ from flask_login import login_user, login_required
 from flask import redirect
 from flask_login import logout_user
 from flask import url_for
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash
 from web_content.src.blogYY.blogYY_login_service import search_user_by_username
 from web_content.src.blogYY.blogYY_login_service import search_user_by_uuid_str
 
@@ -69,14 +72,6 @@ def blogYY_page_user_logout():
     """
     logout_user()
     return redirect(url_for("blogYY_page_blog_index"))
-
-
-# models.py
-import uuid
-from flask import g
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash
-from werkzeug.security import check_password_hash
 
 
 class User(UserMixin):
