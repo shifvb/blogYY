@@ -51,10 +51,9 @@ def blogYY_api_user_login_v1():
     username = request.form.get('username', None)
     password = request.form.get('password', None)
     remember_me = request.form.get('remember_me', False)
-    user = User(username)
     _user_info = search_user_by_username(username=username)
     if _user_info and check_password_hash(pwhash=_user_info["password_hash"], password=password):
-        login_user(user, remember=remember_me)
+        login_user(User(username), remember=remember_me)
         return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
     else:
         return redirect(url_for("blogYY_page_user_login"))
