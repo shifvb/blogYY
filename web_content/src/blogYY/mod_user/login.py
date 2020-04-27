@@ -18,7 +18,7 @@ from web_content.src.blogYY.mod_user.models import User
 # 这时用户在会话中的状态就是登录状态了
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
-login_manager.login_view = 'login'
+login_manager.login_view = 'blogYY_page_login'
 login_manager.init_app(app=app)
 
 
@@ -45,9 +45,6 @@ def blogYY_page_login():
         remember_me = request.form.get('remember_me', False)
         user = User(username)
         if user.verify_password(password):
-            print("login success")
             login_user(user, remember=remember_me)
             return redirect(request.args.get('next') or url_for("blogYY_page_blog_index"))
-        else:
-            print("login failed")
     return render_template("blogYY/pg_login/login.html", form=form)

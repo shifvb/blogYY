@@ -5,6 +5,8 @@ from flask import request
 from flask import jsonify
 from flask import url_for
 from flask import abort
+from flask_login import current_user
+from flask_login import login_required
 from web_content import app
 from web_content.src.blogYY.blogYY_service import search_articles
 from web_content.src.blogYY.blogYY_service import search_articles_info
@@ -17,6 +19,7 @@ from web_content.src.blogYY.blogYY_service import update_article_by_id
 from web_content.src.blogYY.blogYY_service import search_categories
 
 
+@app.route("/")
 @app.route("/blogYY/blog_index", methods=["GET"])
 def blogYY_page_blog_index():
     # page limit & offset
@@ -71,6 +74,7 @@ def blogYY_page_single_article(article_id):
 
 
 @app.route("/blogYY/add_article", methods=["GET"])
+@login_required
 def blogYY_page_add_article():
     """
     rendering add article page
@@ -139,6 +143,7 @@ def blogYY_page_article_list():
 
 
 @app.route("/blogYY/mod_article/<int:article_id>", methods=["GET"])
+@login_required
 def blogYY_page_mod_article(article_id):
     """
     rendering modify article page
@@ -158,6 +163,7 @@ def blogYY_page_mod_article(article_id):
 
 
 @app.route("/blogYY/api/v1/add_article", methods=["POST"])
+@login_required
 def blogYY_api_add_article_v1():
     """
     api for add article
@@ -190,6 +196,7 @@ def blogYY_api_add_article_v1():
 
 
 @app.route("/blogYY/api/v1/del_article/<int:article_id>", methods=["POST"])
+@login_required
 def blogYY_api_del_article_v1(article_id):
     """
     api for delete article
@@ -204,11 +211,12 @@ def blogYY_api_del_article_v1(article_id):
     """
     delete_article_by_id(article_id)
     return jsonify({
-        "href": url_for("blogYY_page_blog_index")
+        "redirect": url_for("blogYY_page_blog_index")
     })
 
 
 @app.route("/blogYY/api/v1/mod_article/<int:article_id>", methods=["POST"])
+@login_required
 def blogYY_api_mod_article_v1(article_id):
     """
     api for modify article

@@ -18,7 +18,7 @@ $(function() {
             },
             "success": function(rsp) {
                 alert("删除成功！");
-                location.href = rsp["href"];
+                location.href = rsp["redirect"];
             },
             "error": function(rsp) {
                 alert("请求错误，请稍后再试！");
