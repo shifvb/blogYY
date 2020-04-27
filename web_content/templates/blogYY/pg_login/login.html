@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+</head>
+<body>
+<form action="{{ url_for('blogYY_page_login') }}" method="POST">
+    <ul>
+        <li><input type="text" name="username" placeholder="用户名"></li>
+        <li><input type="password" name="password" placeholder="密码"></li>
+        <li><input type="checkbox" name="remember_me">记住我</li>
+        {{ form.csrf_token }}
+        <li><input type="submit" value="Sign In"></li>
+    </ul>
+</form>
+</body>
+</html>

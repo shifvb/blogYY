@@ -8,7 +8,7 @@ app.secret_key = os.urandom(64)
 
 # import views
 import web_content.src.blogYY.blogYY_view
-
+import web_content.src.blogYY.mod_user.login
 
 # establish database connection
 @app.before_request
