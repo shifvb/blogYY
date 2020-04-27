@@ -117,14 +117,12 @@ class User(UserMixin):
         uuid for the user.
         :return:
         """
+        # todo: remove it
+        print("[DEBUG] function call 'get_id': self.username={}".format(self.username))
         if self.username is None:
             return str(uuid.uuid4())
-
-        _cursor = g.blogYY_conn.cursor()
-        _cursor.execute("""SELECT `uuid` FROM `user` WHERE `username`=?;""", (self.username,))
-        _user_info_tuple = _cursor.fetchone()
-
+        _user_info_tuple = search_user_by_username(self.username)
         if _user_info_tuple is not None:
-            return _user_info_tuple[0]
+            return _user_info_tuple["uuid"]
         else:
             return str(uuid.uuid4())
