@@ -5,7 +5,6 @@ from flask import request
 from flask import jsonify
 from flask import url_for
 from flask import abort
-from flask_login import current_user
 from flask_login import login_required
 from web_content import app
 from web_content.src.blogYY.blogYY_service import search_articles
@@ -23,8 +22,8 @@ from web_content.src.blogYY.blogYY_service import search_categories
 @app.route("/blogYY/blog_index", methods=["GET"])
 def blogYY_page_blog_index():
     # page limit & offset
-    page_size = int(request.args["page_size"]) if "page_size" in request.args else 5
-    page_num = int(request.args["page_num"]) if "page_num" in request.args else 1
+    page_size = int(request.args.get("page_size", 5))
+    page_num = int(request.args.get("page_num", 1))
     if page_num <= 0:
         return abort(400)
     if page_size <= 0:
@@ -50,12 +49,7 @@ def blogYY_page_blog_index():
         total_page += 1
 
     # render page
-    return render_template(
-        "blogYY/pg_blog_index/bi.html",
-        articles=articles,
-        total_page=total_page,
-        current_user=current_user
-    )
+    return render_template("blogYY/pg_blog_index/bi.html", articles=articles, total_page=total_page)
 
 
 @app.route("/blogYY/article/<int:article_id>", methods=["GET"])
@@ -70,7 +64,7 @@ def blogYY_page_single_article(article_id):
     article["href_del"] = url_for("blogYY_api_del_article_v1", article_id=article["id"])
     article["category_href"] = url_for("blogYY_page_article_list", category_id=article["category_id"])
     # render template
-    return render_template("blogYY/pg_single_article/sa.html", article=article, current_user=current_user)
+    return render_template("blogYY/pg_single_article/sa.html", article=article)
 
 
 @app.route("/blogYY/add_article", methods=["GET"])
