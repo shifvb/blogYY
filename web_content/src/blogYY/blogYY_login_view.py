@@ -85,31 +85,16 @@ class User(UserMixin):
         self.id = self.get_id()
 
     def verify_password(self, password):
-        password_hash = self.get_password_hash()
+        # todo: remove it
+        print("[DEBUG] function call 'verify_password': self.username={}".format(self.username))
+        _user_info_tuple = search_user_by_username(self.username)
+        if _user_info_tuple is not None:
+            password_hash = _user_info_tuple["password_hash"]
+        else:
+            password_hash = None
         if password_hash is None:
             return False
         return check_password_hash(password_hash, password)
-
-    def get_password_hash(self):
-        """
-        try to get password hash form file.
-
-        :return password_hash:
-            if there is corresponding user in the file, return
-            password hash. If there is no corresponding user,
-            return None.
-        """
-        try:
-            _cursor = g.blogYY_conn.cursor()
-            _cursor.execute("""SELECT `password_hash` FROM `user` WHERE `username`=?;""", (self.username,))
-            _user_info_tuple = _cursor.fetchone()
-            if _user_info_tuple is not None:
-                return _user_info_tuple[0]
-        except IOError:
-            return None
-        except ValueError:
-            return None
-        return None
 
     def get_id(self):
         """
