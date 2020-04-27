@@ -21,5 +21,7 @@ def before_request():
 def teardown_request(rsp):
     try:
         g.blogYY_conn.close()
-    except sqlite3.Error:
-        pass
+    except sqlite3.Error as e:
+        print("sqlite3 Error: " + str(e))
+    except Exception as e:
+        print(str(e))

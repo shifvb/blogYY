@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='plugin/quill/quill.snow.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='blogYY/pg_add_article/aa.css') }}">

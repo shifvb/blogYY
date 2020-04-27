@@ -23,6 +23,9 @@ $(function(){
         $.post({
             "url": document.querySelector("#submit_btn").dataset.submitUrl,
             "type": "POST",
+            "headers": {
+                "X-CSRFToken": document.querySelector("meta[name=csrf-token]").getAttribute("content")
+            },
             "data": data,
             "success": function(rsp) {
                 location.href = document.querySelector("#submit_btn").dataset.redirectUrl;
