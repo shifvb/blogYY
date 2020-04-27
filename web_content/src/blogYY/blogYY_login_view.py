@@ -24,11 +24,6 @@ def user_loader(user_id):
     return User.get(user_id)
 
 
-@app.route("/login", methods=["GET"])
-def login():
-    return render_template("blogYY/pg_login/login.html")
-
-
 @app.route("/blogYY/login", methods=["GET", "POST"])
 def blogYY_page_user_login():
     """
@@ -51,6 +46,7 @@ def blogYY_page_user_login():
 def blogYY_page_user_logout():
     logout_user()
     return redirect(url_for("blogYY_page_user_login"))
+
 
 # forms.py
 from flask_wtf import FlaskForm
